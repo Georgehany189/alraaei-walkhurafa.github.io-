@@ -1019,3 +1019,28 @@ header h2 {
     }
     /* ... أكواد أخرى ... */
 }
+#register-form {
+    max-height: 350px; /* يمكنك تعديل هذا الارتفاع حسب الحاجة */
+    overflow-y: auto;  /* هذا هو ما ينشئ شريط التمرير العمودي */
+    padding-inline-end: 15px; /* لإضافة مسافة داخلية على اليمين لعدم تداخل المحتوى مع شريط التمرير */
+    padding-inline-start: 5px; /* مسافة بسيطة على اليسار */
+}
+
+/* لتحسين مظهر شريط التمرير (اختياري، وقد لا يعمل على جميع المتصفحات) */
+#register-form::-webkit-scrollbar {
+    width: 8px; /* عرض شريط التمرير */
+}
+
+#register-form::-webkit-scrollbar-track {
+    background: var(--background-light); /* خلفية مسار شريط التمرير */
+    border-radius: 10px;
+}
+
+#register-form::-webkit-scrollbar-thumb {
+    background: var(--primary-color); /* لون مقبض شريط التمرير */
+    border-radius: 10px;
+}
+
+#register-form::-webkit-scrollbar-thumb:hover {
+    background: #3a7bd5; /* لون المقبض عند التمرير عليه */
+}
