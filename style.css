@@ -133,6 +133,7 @@ body {
 .form-group {
     margin-bottom: 18px;
     text-align: right; /* For RTL languages */
+    position: relative; /* Added for password toggle icon positioning */
 }
 
 .form-group label {
@@ -167,6 +168,30 @@ body {
     box-shadow: 0 0 0 3px rgba(92, 107, 192, 0.2); /* Shadow matches primary color */
     outline: none;
 }
+
+/* Password Toggle Icon Styling */
+.password-group input[type="password"],
+.password-group input[type="text"] { /* Adjust padding for icon */
+    padding-inline-end: 45px; /* Make space for the icon (for RTL) */
+}
+
+.toggle-password {
+    position: absolute;
+    left: 15px; /* Position from the left (for RTL) */
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--secondary-color);
+    font-size: 1.1em;
+    transition: color 0.3s;
+    /* Ensure icon is above input field but inside the password-group div */
+    z-index: 10;
+}
+
+.toggle-password:hover {
+    color: var(--primary-color);
+}
+
 
 /* Validation error messages */
 .validation-error {
@@ -290,39 +315,6 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     overflow: hidden;
-}
-
-/* Facebook Login Button (styles will remain but button is commented out in HTML) */
-.facebook-login-container {
-    margin-top: 15px;
-}
-
-.facebook-login-btn {
-    width: 100%;
-    padding: 12px;
-    background-color: #3B5998; /* Facebook blue */
-    color: var(--text-light);
-    border: none;
-    border-radius: 8px;
-    font-size: 1em;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.facebook-login-btn:hover {
-    background-color: #2D4373;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.facebook-login-btn i {
-    margin-inline-end: 10px; /* For RTL */
-    font-size: 1.2em;
 }
 
 .error-message { /* General error message, typically used for JS-controlled messages */

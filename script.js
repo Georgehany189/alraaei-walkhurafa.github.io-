@@ -18,6 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginToggleBtn = document.getElementById('login-toggle');
     const registerToggleBtn = document.getElementById('register-toggle');
 
+    // Password Toggle Icons
+    const toggleLoginPassword = document.getElementById('toggle-login-password');
+    const toggleRegisterPassword = document.getElementById('toggle-register-password');
+
+
     // Validation/Message Display Elements
     const registerNameError = document.getElementById('register-name-error');
     const registerEmailError = document.getElementById('register-email-error');
@@ -30,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Main App Elements
     const container = document.querySelector('.container');
-    const logoutBtn = document.getElementById('logout-btn');
+    const logoutBtn = document.getElementById('logout-btn'); // Both desktop and sidebar logout buttons share this ID
     const sidebar = document.querySelector('.sidebar');
     const hamburgerMenu = document.querySelector('.hamburger-menu');
     const navLinks = document.querySelectorAll('.sidebar nav ul li a');
@@ -138,6 +143,19 @@ document.addEventListener('DOMContentLoaded', () => {
         return JSON.parse(jsonPayload);
     }
 
+    // Function to toggle password visibility
+    function togglePasswordVisibility(inputElement, toggleIconElement) {
+        if (inputElement.type === 'password') {
+            inputElement.type = 'text';
+            toggleIconElement.classList.remove('fa-eye');
+            toggleIconElement.classList.add('fa-eye-slash');
+        } else {
+            inputElement.type = 'password';
+            toggleIconElement.classList.remove('fa-eye-slash');
+            toggleIconElement.classList.add('fa-eye');
+        }
+    }
+
     // --- Authentication Logic ---
 
     function showLogin() {
@@ -174,6 +192,16 @@ document.addEventListener('DOMContentLoaded', () => {
         loginToggleBtn.classList.remove('active');
         clearValidationErrors();
     });
+
+    // Event Listeners for Password Toggles
+    toggleLoginPassword.addEventListener('click', () => {
+        togglePasswordVisibility(loginPasswordInput, toggleLoginPassword.querySelector('i'));
+    });
+
+    toggleRegisterPassword.addEventListener('click', () => {
+        togglePasswordVisibility(registerPasswordInput, toggleRegisterPassword.querySelector('i'));
+    });
+
 
     // Handle Login Form Submission
     loginForm.addEventListener('submit', (e) => {
@@ -297,14 +325,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Logout Functionality
-    logoutBtn.addEventListener('click', () => {
-        localStorage.removeItem('priest_app_current_user_email');
-        currentUser = null;
-        priest_app_data = {}; // Clear current user data
-        console.log('User logged out.');
-        showLogin();
-        showGlobalMessage('تم تسجيل الخروج بنجاح.', 'success');
+    // Select both desktop and sidebar logout buttons using their shared ID
+    document.querySelectorAll('#logout-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            localStorage.removeItem('priest_app_current_user_email');
+            currentUser = null;
+            priest_app_data = {}; // Clear current user data
+            console.log('User logged out.');
+            showLogin();
+            showGlobalMessage('تم تسجيل الخروج بنجاح.', 'success');
+        });
     });
+
 
     // --- Social Login Callbacks ---
 
@@ -360,83 +392,6 @@ document.addEventListener('DOMContentLoaded', () => {
             showGlobalMessage('تم إنشاء الحساب بحساب Google بنجاح!', 'success');
         }
     };
-
-    // Facebook Login Callback (Commented Out as requested)
-    // window.handleFacebookLoginResponse = function(response) {
-    //     clearValidationErrors();
-    //     if (response.status === 'connected') {
-    //         const accessToken = response.authResponse.accessToken;
-    //         const fbUserId = response.authResponse.userID;
-
-    //         FB.api('/me', { fields: 'name,email' }, function(userResponse) {
-    //             const userEmail = userResponse.email;
-    //             const userName = userResponse.name;
-
-    //             if (!userEmail) {
-    //                 showGlobalMessage('لا يمكن تسجيل الدخول بفيسبوك بدون بريد إلكتروني.', 'error');
-    //                 return;
-    //             }
-
-    //             if (priest_app_users[userEmail]) {
-    //                 localStorage.setItem('priest_app_current_user_email', userEmail);
-    //                 currentUser = priest_app_users[userEmail];
-    //                 priest_app_data = JSON.parse(localStorage.getItem(`priest_app_data_${currentUser.email}`) || '{}');
-    //                 console.log('User logged in with Facebook (existing profile):', currentUser);
-    //                 showMainApp();
-    //                 showGlobalMessage('تم تسجيل الدخول بحساب Facebook بنجاح!', 'success');
-    //             } else {
-    //                 const defaultAge = 30;
-    //                 const defaultDob = "1995-01-01";
-
-    //                 currentUser = {
-    //                     type: 'facebook',
-    //                     id: fbUserId,
-    //                     email: userEmail,
-    //                     name: userName,
-    //                     dob: defaultDob,
-    //                     age: defaultAge
-    //                 };
-    //                 priest_app_users[userEmail] = {
-    //                     type: 'facebook',
-    //                     id: fbUserId,
-    //                     name: currentUser.name,
-    //                     password: null,
-    //                     dob: currentUser.dob,
-    //                     age: currentUser.age,
-    //                     email: userEmail
-    //                 };
-    //                 saveData();
-    //                 localStorage.setItem('priest_app_current_user_email', userEmail);
-    //                 priest_app_data = {};
-    //                 console.log('New Facebook user registered and logged in:', currentUser);
-    //                 showMainApp();
-    //                 showGlobalMessage('تم إنشاء الحساب بحساب Facebook بنجاح!', 'success');
-    //             }
-    //         });
-    //     } else {
-    //         showGlobalMessage('فشل تسجيل الدخول بحساب Facebook. الرجاء المحاولة مرة أخرى.', 'error');
-    //         console.log('User cancelled login or did not fully authorize.');
-    //     }
-    // }
-
-    // Initialize Facebook SDK (Commented Out as requested)
-    // window.fbAsyncInit = function() {
-    //     FB.init({
-    //         appId: 'YOUR_FACEBOOK_APP_ID',
-    //         cookie: true,
-    //         xfbml: true,
-    //         version: 'v12.0'
-    //     });
-    //     FB.AppEvents.logPageView();
-    // };
-
-    // (function(d, s, id){
-    //     var js, fjs = d.getElementsByTagName(s)[0];
-    //     if (d.getElementById(id)) {return;}
-    //     js = d.createElement(s); js.id = id;
-    //     js.src = "https://connect.facebook.net/en_US/sdk.js";
-    //     fjs.parentNode.insertBefore(js, fjs);
-    // }(document, 'script', 'facebook-jssdk'));
 
 
     // --- Main App Logic ---
@@ -907,10 +862,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Initial Load ---
     loadData(); // Load user data and decide which page to show
 
-    // If already logged in, show the main app (this part will be handled by loadData)
-    // if (currentUser) {
-    //     showMainApp();
-    // } else {
-    // //    showLogin(); // This is already called by loadData if no current user
-    // }
 });
