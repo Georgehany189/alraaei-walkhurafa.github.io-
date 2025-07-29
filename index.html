@@ -3,276 +3,243 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الراعي و الخراف</title>
-    <link rel="stylesheet" href="style.css">
+    <title>تطبيق الكاهن | شهاب</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+    <link rel="stylesheet" href="style.css">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-</head>
+    </head>
 <body>
-    <div class="login-page active">
+
+    <div class="login-page" id="login-page">
         <div class="login-card">
-            <h2>تسجيل الدخول</h2>
+            <h2>مرحباً بك!</h2>
 
             <div class="auth-toggle-buttons">
-                <button id="show-login-form" class="active">تسجيل الدخول</button>
-                <button id="show-signup-form">إنشاء حساب جديد</button>
+                <button id="login-toggle" class="active">تسجيل الدخول</button>
+                <button id="register-toggle">التسجيل</button>
             </div>
 
-            <form id="standard-login-form" class="auth-form active">
-                <p>الرجاء تسجيل الدخول باستخدام البريد الإلكتروني وكلمة المرور.</p>
+            <form id="login-form" class="auth-form active">
                 <div class="form-group">
                     <label for="login-email">البريد الإلكتروني:</label>
-                    <input type="email" id="login-email" name="email" required>
+                    <input type="email" id="login-email" required>
+                    <p class="validation-error" id="login-email-error"></p>
                 </div>
                 <div class="form-group">
                     <label for="login-password">كلمة المرور:</label>
-                    <input type="password" id="login-password" name="password" required>
+                    <input type="password" id="login-password" required>
+                    <p class="validation-error" id="login-password-error"></p>
                 </div>
-                <button type="submit">دخول</button>
+                <button type="submit">تسجيل الدخول</button>
             </form>
 
-            <div id="social-sign-in-section" class="auth-form active">
-                <p class="or-separator">أو</p>
-                <div id="g_id_onload"
-                     data-client_id="1067883096174-rlq0tga1h538tpkk2n9emh49kbdgrouu.apps.googleusercontent.com"
-                     data-callback="handleCredentialResponse"
-                     data-auto_prompt="false">
+            <form id="register-form" class="auth-form">
+                <div class="form-group">
+                    <label for="register-name">الاسم الكامل:</label>
+                    <input type="text" id="register-name" required>
+                    <p class="validation-error" id="register-name-error"></p>
                 </div>
-                <div class="g_id_signin"
-                     data-type="standard"
-                     data-size="large"
-                     data-theme="outline"
-                     data-text="sign_in_with"
-                     data-shape="rectangular"
-                     data-logo_alignment="left"
-                     data-width="300">
+                <div class="form-group">
+                    <label for="register-email">البريد الإلكتروني:</label>
+                    <input type="email" id="register-email" required>
+                    <p class="validation-error" id="register-email-error"></p>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">كلمة المرور:</label>
+                    <input type="password" id="register-password" required>
+                    <p class="validation-error" id="register-password-error"></p>
+                </div>
+                <div class="form-group">
+                    <label for="register-dob">تاريخ الميلاد:</label>
+                    <input type="date" id="register-dob" required>
+                    <p class="validation-error" id="register-dob-error"></p>
+                </div>
+                <div class="form-group">
+                    <label for="register-age">السن:</label>
+                    <input type="number" id="register-age" min="1" max="120" required>
+                    <p class="validation-error" id="register-age-error"></p>
+                </div>
+                <button type="submit">التسجيل</button>
+            </form>
+
+            <div class="or-separator">أو</div>
+
+            <div id="g_id_onload"
+                 data-client_id="YOUR_GOOGLE_CLIENT_ID" data-callback="handleGoogleLoginResponse"
+                 data-auto_prompt="false">
             </div>
-                </div>
-            <form id="signup-form" class="auth-form">
-                <p>الرجاء إدخال بياناتك لإنشاء حساب جديد.</p>
-                <div class="form-group">
-                    <label for="signup-name">الاسم:</label>
-                    <input type="text" id="signup-name" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="signup-email">البريد الإلكتروني:</label>
-                    <input type="email" id="signup-email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="signup-password">كلمة المرور:</label>
-                    <input type="password" id="signup-password" name="password" required>
-                </div>
-                <div class="form-group">
-                    <label for="signup-confirm-password">تأكيد كلمة المرور:</label>
-                    <input type="password" id="signup-confirm-password" name="confirmPassword" required>
-                </div>
-                <div class="form-group">
-                    <label for="signup-dob">تاريخ الميلاد:</label>
-                    <input type="date" id="signup-dob" name="dob" required>
-                </div>
-                <div class="form-group">
-                    <label for="signup-age">السن:</label>
-                    <input type="number" id="signup-age" name="age" min="18" required>
-                </div>
-                <button type="submit">إنشاء حساب</button>
-            </form>
+            <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="left"></div>
 
-            <p id="login-error" class="error-message" style="display: none;"></p>
+            <p class="message-display" id="global-message"></p>
+
         </div>
     </div>
 
     <div class="container">
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
             <div class="logo">
-                <h1>الراعي و الخراف</h1>
+                <h1>تطبيق الكاهن</h1>
             </div>
             <nav>
                 <ul>
-                    <li class="active" data-section="dashboard">
-                        <a href="#">الرئيسية</a>
-                    </li>
-                    <li data-section="confessions">
-                        <a href="#">الاعترافات</a>
-                    </li>
-                    <li data-section="sermons">
-                        <a href="#">إعداد الخطب</a>
-                    </li>
-                    <li data-section="spiritual-life">
-                        <a href="#">الحياة الروحية</a>
-                    </li>
-                    <li data-section="tasks">
-                        <a href="#">المهام</a>
-                    </li>
-                    <li data-section="ai-chat">
-                        <a href="#">دردشة الذكاء الاصطناعي</a>
-                    </li>
-                    <li>
-                        <a href="#" id="logout-btn">تسجيل الخروج</a>
-                    </li>
+                    <li class="active"><a href="#" data-section="dashboard"><i class="fas fa-tachometer-alt"></i> لوحة القيادة</a></li>
+                    <li><a href="#" data-section="tasks"><i class="fas fa-tasks"></i> المهام</a></li>
+                    <li><a href="#" data-section="confessions"><i class="fas fa-cross"></i> الاعترافات</a></li>
+                    <li><a href="#" data-section="sermons"><i class="fas fa-church"></i> العظات</a></li>
+                    <li><a href="#" data-section="spiritual-life"><i class="fas fa-lightbulb"></i> الحياة الروحية</a></li>
+                    <li><a href="#" data-section="chat"><i class="fas fa-comments"></i> الدردشة مع شهاب</a></li>
                 </ul>
             </nav>
+            <button id="logout-btn" class="sidebar-logout-btn"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
         </aside>
 
         <main class="main-content">
             <header>
-                <h2 id="main-header-title">الرئيسية</h2>
+                <button class="hamburger-menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h2 id="current-section-title">لوحة القيادة</h2>
                 <div class="header-controls">
-                    <button class="hamburger-menu" aria-label="Open menu">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    <div class="language-switcher">
-                        <button data-lang="ar">العربية</button>
-                        <button data-lang="en">English</button>
-                    </div>
+                    <button id="logout-btn" class="action-btn desktop-logout-btn"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
                 </div>
             </header>
 
             <section id="dashboard" class="content-section active">
-                <h3>مرحباً بك، أيها الكاهن!</h3>
-                <p>هنا ستجد نظرة عامة على مهامك.</p>
+                <h3>ملخص لوحة القيادة</h3>
                 <div class="cards">
                     <div class="card">
-                        <h4>الاعترافات القادمة</h4>
-                        <p>لا توجد اعترافات مجدولة.</p>
+                        <h4>الاسم</h4>
+                        <p id="user-name-display">غير متاح</p>
                     </div>
                     <div class="card">
-                        <h4>الخطب القادمة</h4>
-                        <p>خطبة الأحد: العدل الإلهي</p>
+                        <h4>البريد الإلكتروني</h4>
+                        <p id="user-email-display">غير متاح</p>
                     </div>
-                </div>
-            </section>
-
-            <section id="confessions" class="content-section">
-                <h3>إدارة الاعترافات</h3>
-                <button class="add-btn">إضافة اعتراف جديد</button>
-                <div class="confessions-list">
-                    <p>قائمة الاعترافات ستظهر هنا.</p>
-                </div>
-                <div class="form-card" style="display: none;" id="confession-form">
-                    <h4>إضافة اعتراف</h4>
-                    <form>
-                        <div class="form-group">
-                            <label for="confession-date">التاريخ:</label>
-                            <input type="date" id="confession-date" name="date" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="confession-summary">ملخص (ملاحظات خاصة):</label>
-                            <textarea id="confession-summary" name="summary" rows="5"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="confession-penance">التوبة المقترحة:</label>
-                            <input type="text" id="confession-penance" name="penance">
-                        </div>
-                        <button type="submit">حفظ الاعتراف</button>
-                        <button type="button" class="cancel-btn">إلغاء</button>
-                    </form>
-                </div>
-            </section>
-
-            <section id="sermons" class="content-section">
-                <h3>إعداد الخطب</h3>
-                <button class="add-btn">إضافة خطبة جديدة</button>
-                <div class="sermons-list">
-                    <p>قائمة الخطب ستظهر هنا.</p>
-                </div>
-                <div class="form-card" style="display: none;" id="sermon-form">
-                    <h4>إضافة خطبة</h4>
-                    <form>
-                        <div class="form-group">
-                            <label for="sermon-title">العنوان:</label>
-                            <input type="text" id="sermon-title" name="title" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="sermon-date">التاريخ:</label>
-                            <input type="date" id="sermon-date" name="date" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="sermon-content">المحتوى:</label>
-                            <textarea id="sermon-content" name="content" rows="10"></textarea>
-                        </div>
-                        <button type="submit">حفظ الخطبة</button>
-                        <button type="button" class="cancel-btn">إلغاء</button>
-                    </form>
-                </div>
-            </section>
-
-            <section id="spiritual-life" class="content-section">
-                <h3>الحياة الروحية</h3>
-                <button class="add-btn">إضافة مدخل جديد</button>
-                <div class="spiritual-entries-list">
-                    <p>سجل الحياة الروحية سيظهر هنا.</p>
-                </div>
-                <div class="form-card" style="display: none;" id="spiritual-form">
-                    <h4>إضافة مدخل روحي</h4>
-                    <form>
-                        <div class="form-group">
-                            <label for="spiritual-date">التاريخ:</label>
-                            <input type="date" id="spiritual-date" name="date" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="spiritual-type">النوع:</label>
-                            <select id="spiritual-type" name="type">
-                                <option value="prayer">صلاة</option>
-                                <option value="journal">تأمل/يوميات</option>
-                                <option value="reading">قراءة روحية</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="spiritual-content">المحتوى:</label>
-                            <textarea id="spiritual-content" name="content" rows="8"></textarea>
-                        </div>
-                        <button type="submit">حفظ المدخل</button>
-                        <button type="button" class="cancel-btn">إلغاء</button>
-                    </form>
+                    <div class="card">
+                        <h4>تاريخ الميلاد</h4>
+                        <p id="user-dob-display">غير متاح</p>
+                    </div>
+                    <div class="card">
+                        <h4>السن</h4>
+                        <p id="user-age-display">غير متاح</p>
+                    </div>
                 </div>
             </section>
 
             <section id="tasks" class="content-section">
                 <h3>إدارة المهام</h3>
-                <button class="add-btn" id="add-task-btn">إضافة مهمة جديدة</button>
-                <div class="tasks-list">
-                    <p>لا توجد مهام حالياً. أضف مهمة جديدة!</p>
-                </div>
+                <button id="add-task-btn" class="add-btn"><i class="fas fa-plus"></i> إضافة مهمة جديدة</button>
 
-                <div class="form-card" style="display: none;" id="task-form">
+                <div id="add-task-form" class="form-card">
                     <h4>إضافة مهمة</h4>
-                    <form id="new-task-form">
+                    <form>
                         <div class="form-group">
-                            <label for="task-title">عنوان المهمة:</label>
-                            <input type="text" id="task-title" name="title" required>
+                            <label for="task-input">وصف المهمة:</label>
+                            <input type="text" id="task-input" required>
                         </div>
-                        <div class="form-group">
-                            <label for="task-date">تاريخ الاستحقاق (اختياري):</label>
-                            <input type="date" id="task-date" name="date">
-                        </div>
-                        <div class="form-group">
-                            <label for="task-time">وقت الاستحقاق (اختياري):</label>
-                            <input type="time" id="task-time" name="time">
-                        </div>
-                        <button type="submit">حفظ المهمة</button>
-                        <button type="button" class="cancel-btn">إلغاء</button>
+                        <button type="submit">إضافة</button>
+                        <button type="button" id="cancel-add-task" class="cancel-btn">إلغاء</button>
                     </form>
                 </div>
+
+                <div id="tasks-list" class="tasks-list">
+                    </div>
             </section>
 
-            <section id="ai-chat" class="content-section">
-                <h3>شهاب</h3>
-                <div class="chat-container">
-                    <div class="chat-messages" id="chat-messages">
-                        <div class="message ai-message">
-                            <p>مرحباً بك! أنا شهاب، مساعدك الذكي. كيف يمكنني مساعدتك اليوم؟</p>
+            <section id="confessions" class="content-section">
+                <h3>إدارة الاعترافات</h3>
+                <button id="add-confession-btn" class="add-btn"><i class="fas fa-plus"></i> إضافة اعتراف</button>
+
+                <div id="add-confession-form" class="form-card">
+                    <h4>إضافة اعتراف</h4>
+                    <form>
+                        <div class="form-group">
+                            <label for="confession-text-input">تفاصيل الاعتراف:</label>
+                            <textarea id="confession-text-input" rows="5" required></textarea>
                         </div>
+                        <button type="submit">إضافة</button>
+                        <button type="button" id="cancel-add-confession" class="cancel-btn">إلغاء</button>
+                    </form>
+                </div>
+
+                <div id="confessions-list" class="confessions-list">
+                    </div>
+            </section>
+
+            <section id="sermons" class="content-section">
+                <h3>إدارة العظات</h3>
+                <button id="add-sermon-btn" class="add-btn"><i class="fas fa-plus"></i> إضافة عظة جديدة</button>
+
+                <div id="add-sermon-form" class="form-card">
+                    <h4>إضافة عظة</h4>
+                    <form>
+                        <div class="form-group">
+                            <label for="sermon-title-input">عنوان العظة:</label>
+                            <input type="text" id="sermon-title-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sermon-date-input">تاريخ العظة:</label>
+                            <input type="date" id="sermon-date-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sermon-textarea">نص العظة:</label>
+                            <textarea id="sermon-textarea" rows="10" required></textarea>
+                        </div>
+                        <button type="submit">إضافة</button>
+                        <button type="button" id="cancel-add-sermon" class="cancel-btn">إلغاء</button>
+                    </form>
+                </div>
+
+                <div id="sermons-list" class="sermons-list">
+                    </div>
+            </section>
+
+            <section id="spiritual-life" class="content-section">
+                <h3>الحياة الروحية</h3>
+                <button id="add-spiritual-entry-btn" class="add-btn"><i class="fas fa-plus"></i> إضافة إدخال</button>
+
+                <div id="add-spiritual-entry-form" class="form-card">
+                    <h4>إضافة إدخال جديد</h4>
+                    <form>
+                        <div class="form-group">
+                            <label for="spiritual-entry-title-input">عنوان الإدخال:</label>
+                            <input type="text" id="spiritual-entry-title-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="spiritual-entry-date-input">التاريخ:</label>
+                            <input type="date" id="spiritual-entry-date-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="spiritual-entry-textarea">وصف الإدخال:</label>
+                            <textarea id="spiritual-entry-textarea" rows="10" required></textarea>
+                        </div>
+                        <button type="submit">إضافة</button>
+                        <button type="button" id="cancel-add-spiritual-entry" class="cancel-btn">إلغاء</button>
+                    </form>
+                </div>
+
+                <div id="spiritual-entries-list" class="spiritual-entries-list">
+                    </div>
+            </section>
+
+            <section id="chat" class="content-section">
+                <h3>الدردشة مع شهاب</h3>
+                <div class="chat-container">
+                    <div id="chat-messages" class="chat-messages">
+                        <div class="message ai-message"><strong>شهاب:</strong> مرحباً! أنا شهاب، مساعدك الذكي. كيف يمكنني مساعدتك اليوم؟</div>
                     </div>
                     <div class="chat-input-area">
                         <input type="text" id="chat-input" placeholder="اكتب رسالتك هنا...">
-                        <button id="send-chat-btn"><i class="fas fa-paper-plane"></i></button>
+                        <button id="chat-send-btn"><i class="fas fa-paper-plane"></i></button>
                     </div>
                 </div>
             </section>
+
         </main>
     </div>
 
     <script src="script.js"></script>
+
 </body>
 </html>

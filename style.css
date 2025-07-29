@@ -6,22 +6,23 @@
 }
 
 :root {
-    --primary-color: #4A90E2; /* A calming blue */
-    --secondary-color: #6A7B8E; /* A muted grey-blue */
-    --accent-color: #FFC107; /* A warm yellow for accents */
-    --background-light: #F8F8F8; /* Light background for app */
-    --background-dark: #E0E0E0; /* Slightly darker background for cards/sections */
-    --text-dark: #333;
-    --text-light: #F8F8F8;
-    --border-color: #E0E0E0;
-    --shadow-light: rgba(0, 0, 0, 0.08);
-    --shadow-medium: rgba(0, 0, 0, 0.15);
-    --red-error: #dc3545;
-    --green-success: #28a745;
+    /* Updated Color Palette for more warmth and professionalism */
+    --primary-color: #5C6BC0;   /* Deeper Blue-Violet (Indigo) */
+    --secondary-color: #78909C; /* Muted Blue-Grey */
+    --accent-color: #FFB300;    /* Warm Amber for accents */
+    --background-light: #ECEFF1; /* Very light grey, almost off-white */
+    --background-dark: #CFD8DC;  /* Slightly darker grey for cards/sections */
+    --text-dark: #263238;       /* Dark charcoal for main text */
+    --text-light: #FFFFFF;      /* White for text on dark backgrounds */
+    --border-color: #B0BEC5;    /* Soft border color */
+    --shadow-light: rgba(0, 0, 0, 0.08); /* Lighter, subtle shadow */
+    --shadow-medium: rgba(0, 0, 0, 0.15); /* Slightly more pronounced shadow */
+    --red-error: #D32F2F;       /* Stronger red for errors */
+    --green-success: #388E3C;   /* Deeper green for success */
 }
 
 html {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern, clean font */
+    font-family: 'Cairo', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; /* More versatile font stack, Cairo for Arabic */
     line-height: 1.6;
     color: var(--text-dark);
     height: 100%;
@@ -29,29 +30,31 @@ html {
 
 body {
     background-color: var(--background-light);
-    display: flex; /* Ensure body takes full height and manages children */
+    display: flex;
     flex-direction: column;
     min-height: 100vh;
-    overflow-x: hidden; /* Prevent horizontal scroll */
-    /* Background from previous request, if user wants it */
-    /* background-image: url('http://googleusercontent.com/generated_image_content/0');
-    background-repeat: repeat;
-    background-size: auto; */
+    overflow-x: hidden; /* Prevent horizontal scrollbar */
+    /* Uncomment and add your background image if desired, ensure it's subtle */
+    /* background-image: url('1000116921.jpg'); */
+    /* background-repeat: repeat; */
+    /* background-size: 150px; /* Adjust size for subtle pattern */
+    /* opacity: 0.3; /* Make it very subtle */
 }
 
 /* --- Login Page Styling --- */
 .login-page {
-    display: none; /* Hidden by default, activated by JS */
+    display: none; /* Controlled by JS */
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     width: 100%;
-    background: linear-gradient(135deg, var(--primary-color) 0%, #6dd5ed 100%); /* Gradient background */
+    /* Deeper, richer gradient */
+    background: linear-gradient(135deg, var(--primary-color) 0%, #7986CB 100%);
     padding: 20px;
-    position: fixed; /* To cover the entire viewport when active */
+    position: fixed; /* To cover the whole screen */
     top: 0;
     left: 0;
-    z-index: 1000; /* Ensure it's on top */
+    z-index: 1000;
 }
 
 .login-page.active {
@@ -60,11 +63,11 @@ body {
 
 .login-card {
     background: #ffffff;
-    padding: 40px;
+    padding: 30px; /* Reduced padding for tighter feel */
     border-radius: 12px;
-    box-shadow: 0 10px 30px var(--shadow-medium);
+    box-shadow: 0 8px 25px var(--shadow-medium); /* Softer shadow */
     width: 100%;
-    max-width: 450px;
+    max-width: 360px; /* Optimized max-width */
     text-align: center;
     animation: fadeIn 0.5s ease-out;
 }
@@ -77,7 +80,7 @@ body {
 .login-card h2 {
     color: var(--primary-color);
     margin-bottom: 25px;
-    font-size: 2.2em;
+    font-size: 2em; /* Slightly smaller for better fit */
     font-weight: 600;
 }
 
@@ -93,10 +96,10 @@ body {
     background-color: transparent;
     border: none;
     padding: 12px 20px;
-    font-size: 1.1em;
+    font-size: 1em;
     cursor: pointer;
     color: var(--secondary-color);
-    transition: color 0.3s, border-bottom 0.3s, font-weight 0.3s;
+    transition: color 0.3s, border-bottom 0.3s, font-weight 0.3s; /* Added smooth transition */
     outline: none;
     border-radius: 4px;
 }
@@ -108,7 +111,7 @@ body {
 }
 
 .auth-form {
-    display: none; /* Hidden by default, activated by JS */
+    display: none; /* Controlled by JS */
     animation: slideInFromTop 0.4s ease-out;
 }
 
@@ -122,14 +125,14 @@ body {
 }
 
 .auth-form p {
-    font-size: 0.95em;
+    font-size: 0.9em;
     color: var(--secondary-color);
     margin-bottom: 20px;
 }
 
 .form-group {
     margin-bottom: 18px;
-    text-align: right; /* RTL alignment */
+    text-align: right; /* For RTL languages */
 }
 
 .form-group label {
@@ -153,16 +156,84 @@ body {
     border-radius: 8px;
     font-size: 1em;
     color: var(--text-dark);
-    transition: border-color 0.3s, box-shadow 0.3s;
-    background-color: var(--background-light);
+    background-color: var(--background-light); /* Lighter background for inputs */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition on focus */
 }
 
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+    box-shadow: 0 0 0 3px rgba(92, 107, 192, 0.2); /* Shadow matches primary color */
     outline: none;
+}
+
+/* Validation error messages */
+.validation-error {
+    color: var(--red-error);
+    font-size: 0.85em;
+    margin-top: 5px;
+    text-align: right; /* For RTL */
+    display: block;
+    height: 1.2em; /* To maintain consistent layout spacing */
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease;
+}
+
+.validation-error.active {
+    opacity: 1;
+}
+
+/* Global success/error messages */
+.message-display {
+    text-align: center;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+    font-weight: 500;
+    font-size: 0.95em;
+    display: none; /* Hidden by default */
+    animation: fadeIn 0.5s ease-out;
+}
+
+.message-display.success {
+    background-color: rgba(56, 142, 60, 0.1);
+    color: var(--green-success);
+    border: 1px solid var(--green-success);
+}
+
+.message-display.error {
+    background-color: rgba(211, 47, 47, 0.1);
+    color: var(--red-error);
+    border: 1px solid var(--red-error);
+}
+
+/* Scrollbar for register form */
+#register-form {
+    max-height: 350px;
+    overflow-y: auto;
+    padding-inline-end: 15px; /* For scrollbar on left in RTL */
+    padding-inline-start: 5px;
+    margin-bottom: 15px;
+}
+
+/* Custom scrollbar styling (for WebKit browsers) */
+#register-form::-webkit-scrollbar {
+    width: 8px;
+}
+
+#register-form::-webkit-scrollbar-track {
+    background: var(--background-light);
+    border-radius: 10px;
+}
+
+#register-form::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+
+#register-form::-webkit-scrollbar-thumb:hover {
+    background: #4B5A9A;
 }
 
 .login-card button[type="submit"] {
@@ -175,13 +246,15 @@ body {
     font-size: 1.1em;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
     margin-top: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .login-card button[type="submit"]:hover {
-    background-color: #3a7bd5; /* Darker shade of primary */
+    background-color: #4B5A9A;
     transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
 .or-separator {
@@ -212,10 +285,14 @@ body {
 
 /* Social Sign-In Buttons */
 .g_id_signin {
-    margin: 15px auto; /* Center Google button */
+    margin: 15px auto;
     display: block;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
 }
 
+/* Facebook Login Button (styles will remain but button is commented out in HTML) */
 .facebook-login-container {
     margin-top: 15px;
 }
@@ -223,36 +300,38 @@ body {
 .facebook-login-btn {
     width: 100%;
     padding: 12px;
-    background-color: #3b5998; /* Facebook blue */
+    background-color: #3B5998; /* Facebook blue */
     color: var(--text-light);
     border: none;
     border-radius: 8px;
     font-size: 1em;
     font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .facebook-login-btn:hover {
-    background-color: #2d4373;
+    background-color: #2D4373;
     transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .facebook-login-btn i {
-    margin-inline-end: 10px; /* Space between icon and text */
+    margin-inline-end: 10px; /* For RTL */
     font-size: 1.2em;
 }
 
-.error-message {
+.error-message { /* General error message, typically used for JS-controlled messages */
     color: var(--red-error);
     text-align: center;
     margin-top: 20px;
     font-size: 0.9em;
     font-weight: 500;
-    background-color: rgba(220, 53, 69, 0.1);
+    background-color: rgba(211, 47, 47, 0.1);
     padding: 10px;
     border-radius: 8px;
     border: 1px solid var(--red-error);
@@ -264,7 +343,8 @@ body {
     min-height: 100vh;
     width: 100%;
     background-color: var(--background-light);
-    display: none; /* Hidden by default, activated by JS */
+    display: none; /* Controlled by JS */
+    overflow: hidden; /* Prevent content overflow issues */
 }
 
 /* Sidebar */
@@ -273,12 +353,12 @@ body {
     background-color: var(--primary-color);
     color: var(--text-light);
     padding: 30px 20px;
-    box-shadow: 2px 0 8px var(--shadow-medium);
+    box-shadow: 2px 0 10px var(--shadow-medium);
     display: flex;
     flex-direction: column;
     transition: transform 0.3s ease-in-out;
-    z-index: 900; /* Below login page */
-    position: sticky; /* Sticky sidebar for desktop */
+    z-index: 900;
+    position: sticky; /* Keeps sidebar fixed when scrolling */
     top: 0;
     height: 100vh;
 }
@@ -286,6 +366,8 @@ body {
 .sidebar .logo {
     text-align: center;
     margin-bottom: 40px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .sidebar .logo h1 {
@@ -298,7 +380,8 @@ body {
 
 .sidebar nav ul {
     list-style: none;
-    flex-grow: 1; /* Pushes logout to bottom */
+    flex-grow: 1; /* Allows nav to take available space */
+    margin-top: 20px;
 }
 
 .sidebar nav ul li {
@@ -312,10 +395,11 @@ body {
     padding: 12px 15px;
     border-radius: 8px;
     transition: background-color 0.3s, color 0.3s, transform 0.2s;
-    font-size: 1.1em;
+    font-size: 1.05em;
     font-weight: 500;
     display: flex;
     align-items: center;
+    gap: 10px; /* Space between icon and text */
 }
 
 .sidebar nav ul li a:hover {
@@ -324,16 +408,16 @@ body {
 }
 
 .sidebar nav ul li.active a {
-    background-color: var(--accent-color); /* Highlight active link */
+    background-color: var(--accent-color);
     color: var(--text-dark);
     font-weight: 700;
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    transform: translateX(0); /* Reset transform for active */
 }
 
 .sidebar nav ul li.active a:hover {
     background-color: var(--accent-color);
     color: var(--text-dark);
-    transform: translateX(0);
 }
 
 /* Main Content Area */
@@ -343,6 +427,7 @@ body {
     display: flex;
     flex-direction: column;
     background-color: var(--background-light);
+    overflow-y: auto; /* Allow main content to scroll */
 }
 
 header {
@@ -354,17 +439,17 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: sticky; /* Sticky header for scrolling content */
+    position: sticky; /* Keep header fixed on scroll */
     top: 0;
     z-index: 500;
-    flex-wrap: wrap; /* Allow wrapping on small screens */
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
 }
 
 header h2 {
-    font-size: 2em;
+    font-size: 1.8em;
     color: var(--primary-color);
     font-weight: 600;
-    margin-inline-end: 20px; /* Space from controls */
+    margin-inline-end: 20px; /* For RTL */
 }
 
 .header-controls {
@@ -374,13 +459,18 @@ header h2 {
 }
 
 .hamburger-menu {
-    display: none; /* Hidden on desktop */
+    display: none; /* Hidden by default on desktop */
     background: none;
     border: none;
     font-size: 1.8em;
     color: var(--primary-color);
     cursor: pointer;
     padding: 5px;
+    transition: transform 0.3s ease;
+}
+
+.container.sidebar-open .hamburger-menu {
+    transform: rotate(90deg); /* Rotate hamburger when sidebar is open */
 }
 
 .language-switcher button {
@@ -391,31 +481,32 @@ header h2 {
     border-radius: 6px;
     cursor: pointer;
     font-size: 0.9em;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 .language-switcher button:hover {
-    background-color: #5a6b7e;
+    background-color: #607D8B;
+    transform: translateY(-1px);
 }
 
 /* Content Sections */
 .content-section {
-    display: none; /* Hidden by default, activated by JS */
+    display: none; /* Controlled by JS */
     background-color: #ffffff;
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 2px 8px var(--shadow-light);
     margin-bottom: 30px;
-    flex-grow: 1; /* Allow content sections to fill space */
+    flex-grow: 1; /* Takes available space */
+    animation: fadeIn 0.5s ease-out;
 }
 
 .content-section.active {
     display: block;
-    animation: fadeIn 0.5s ease-out;
 }
 
 .content-section h3 {
-    font-size: 1.8em;
+    font-size: 1.6em;
     color: var(--text-dark);
     margin-bottom: 20px;
     border-bottom: 2px solid var(--border-color);
@@ -440,17 +531,23 @@ header h2 {
     padding: 25px;
     border-radius: 10px;
     box-shadow: 0 2px 10px var(--shadow-light);
-    text-align: right; /* RTL alignment */
+    text-align: right; /* For RTL */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
 }
 
 .card h4 {
-    font-size: 1.3em;
+    font-size: 1.2em;
     color: var(--primary-color);
     margin-bottom: 10px;
 }
 
 .card p {
-    font-size: 0.95em;
+    font-size: 0.9em;
     color: var(--secondary-color);
 }
 
@@ -463,16 +560,18 @@ header h2 {
     border-radius: 8px;
     font-size: 1em;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
     margin-bottom: 25px;
-    display: inline-flex; /* For better alignment with text */
+    display: inline-flex; /* To align icon and text */
     align-items: center;
-    gap: 8px;
+    gap: 8px; /* Space between icon and text */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .add-btn:hover {
-    background-color: #218838;
+    background-color: #2E7D32;
     transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .add-btn i {
@@ -495,7 +594,7 @@ header h2 {
 }
 
 .form-card h4 {
-    font-size: 1.6em;
+    font-size: 1.5em;
     color: var(--text-dark);
     margin-bottom: 25px;
     border-bottom: 1px solid var(--border-color);
@@ -510,13 +609,15 @@ header h2 {
     border-radius: 8px;
     font-size: 1em;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
     margin-top: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .form-card button[type="submit"]:hover {
-    background-color: #3a7bd5;
+    background-color: #4B5A9A;
     transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .form-card .cancel-btn {
@@ -527,14 +628,16 @@ header h2 {
     border-radius: 8px;
     font-size: 1em;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
     margin-top: 20px;
-    margin-inline-start: 15px; /* Space between buttons */
+    margin-inline-start: 15px; /* For RTL */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .form-card .cancel-btn:hover {
-    background-color: #5a6b7e;
+    background-color: #607D8B;
     transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* List Items (Confessions, Sermons, Spiritual Life, Tasks) */
@@ -543,10 +646,11 @@ header h2 {
 .spiritual-entries-list,
 .tasks-list {
     margin-top: 20px;
-    display: grid; /* Use grid for flexible layout */
+    display: grid; /* Use grid for consistent spacing */
     gap: 15px;
 }
 
+/* Placeholder for empty lists */
 .confessions-list > p,
 .sermons-list > p,
 .spiritual-entries-list > p,
@@ -557,9 +661,10 @@ header h2 {
     padding: 20px;
     border: 1px dashed var(--border-color);
     border-radius: 8px;
+    background-color: var(--background-dark);
 }
 
-.task-item {
+.task-item { /* Used for all list items */
     background-color: var(--background-dark);
     padding: 18px 20px;
     border-radius: 10px;
@@ -567,16 +672,17 @@ header h2 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: background-color 0.3s, transform 0.2s;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
 }
 
 .task-item:hover {
-    background-color: #EBF2F8; /* Lighter hover color */
+    background-color: #DEE4E7;
     transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .task-item.completed {
-    background-color: #e6ffe6; /* Light green for completed tasks */
+    background-color: #E8F5E9; /* Light green for completed tasks */
     opacity: 0.8;
     text-decoration: line-through;
     color: var(--secondary-color);
@@ -584,8 +690,8 @@ header h2 {
 
 .task-item-info {
     flex-grow: 1;
-    text-align: right; /* RTL */
-    padding-inline-end: 15px;
+    text-align: right; /* For RTL */
+    padding-inline-end: 15px; /* For RTL */
 }
 
 .task-item-info h4 {
@@ -613,20 +719,21 @@ header h2 {
     font-size: 1.1em;
     color: var(--secondary-color);
     transition: color 0.3s, transform 0.2s;
-    padding: 5px; /* Make clickable area larger */
-    border-radius: 50%; /* Make it round */
+    padding: 5px;
+    border-radius: 50%;
 }
 
 .task-actions .action-btn:hover {
     transform: scale(1.1);
+    color: var(--primary-color);
 }
 
-.task-actions .complete-btn {
+.task-actions .complete-btn { /* Specific for task completion button (checkbox might override visual) */
     color: var(--green-success);
 }
 
 .task-actions .complete-btn:hover {
-    color: #218838;
+    color: #2E7D32;
 }
 
 .task-actions .delete-btn {
@@ -634,7 +741,7 @@ header h2 {
 }
 
 .task-actions .delete-btn:hover {
-    color: #c82333;
+    color: #C62828;
 }
 
 /* Checkbox specific styling */
@@ -670,21 +777,40 @@ header h2 {
 .chat-container {
     display: flex;
     flex-direction: column;
-    height: 600px; /* Fixed height for chat area */
+    height: 600px; /* Fixed height for chat window */
     border: 1px solid var(--border-color);
     border-radius: 12px;
-    overflow: hidden;
+    overflow: hidden; /* To contain messages and input */
     background-color: #fcfcfc;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.03);
 }
 
 .chat-messages {
-    flex-grow: 1;
+    flex-grow: 1; /* Takes all available height */
     padding: 20px;
-    overflow-y: auto; /* Scrollable messages */
+    overflow-y: auto; /* Scrollable message area */
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 15px; /* Space between messages */
+}
+
+/* Custom scrollbar for chat messages */
+.chat-messages::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: var(--background-light);
+    border-radius: 10px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: 10px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+    background: #607D8B;
 }
 
 .message {
@@ -694,6 +820,7 @@ header h2 {
     line-height: 1.4;
     word-wrap: break-word; /* Ensure long words break */
     animation: messagePop 0.3s ease-out;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 @keyframes messagePop {
@@ -704,15 +831,15 @@ header h2 {
 .user-message {
     background-color: var(--primary-color);
     color: var(--text-light);
-    align-self: flex-end; /* Align to right */
-    border-bottom-right-radius: 5px; /* Sharpen one corner */
+    align-self: flex-end; /* Align to right for user messages */
+    border-bottom-right-radius: 5px; /* Sharpen bottom-right corner */
 }
 
 .ai-message {
     background-color: var(--background-dark);
     color: var(--text-dark);
-    align-self: flex-start; /* Align to left */
-    border-bottom-left-radius: 5px; /* Sharpen one corner */
+    align-self: flex-start; /* Align to left for AI messages */
+    border-bottom-left-radius: 5px; /* Sharpen bottom-left corner */
 }
 
 .chat-input-area {
@@ -726,14 +853,15 @@ header h2 {
     flex-grow: 1;
     padding: 12px 15px;
     border: 1px solid var(--border-color);
-    border-radius: 25px;
+    border-radius: 25px; /* Pill-shaped input */
     font-size: 1em;
-    margin-inline-end: 10px; /* Space from button */
+    margin-inline-end: 10px; /* For RTL */
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .chat-input-area input:focus {
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+    box-shadow: 0 0 0 2px rgba(92, 107, 192, 0.2);
     outline: none;
 }
 
@@ -742,15 +870,17 @@ header h2 {
     color: var(--text-light);
     border: none;
     padding: 12px 18px;
-    border-radius: 25px;
+    border-radius: 25px; /* Pill-shaped button */
     font-size: 1.1em;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .chat-input-area button:hover {
-    background-color: #3a7bd5;
+    background-color: #4B5A9A;
     transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* --- Responsive Design (Media Queries) --- */
@@ -759,18 +889,19 @@ header h2 {
 @media (max-width: 768px) {
     .sidebar {
         position: fixed;
-        right: -280px; /* Hide sidebar off-screen */
+        right: -280px; /* Hidden off-screen to the right (for RTL) */
         top: 0;
         bottom: 0;
         height: 100vh;
-        z-index: 1000; /* Higher than login page, lower than overlay */
-        box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+        z-index: 1000;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.3); /* Shadow on the left edge */
     }
 
     .container.sidebar-open .sidebar {
-        transform: translateX(-280px); /* Slide in from right (RTL) */
+        transform: translateX(-280px); /* Slide in from right */
     }
 
+    /* Overlay when sidebar is open */
     .container.sidebar-open::before {
         content: '';
         position: fixed;
@@ -778,22 +909,22 @@ header h2 {
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: rgba(0, 0, 0, 0.5); /* Overlay */
+        background-color: rgba(0, 0, 0, 0.5);
         z-index: 950;
     }
 
     .hamburger-menu {
-        display: block; /* Show hamburger on mobile */
+        display: block; /* Show hamburger menu on mobile */
     }
 
     .main-content {
         padding: 15px;
-        width: 100%; /* Take full width */
+        width: 100%;
     }
 
     header {
         padding: 15px 20px;
-        flex-direction: column;
+        flex-direction: column; /* Stack items vertically */
         align-items: flex-start;
         gap: 10px;
     }
@@ -801,7 +932,7 @@ header h2 {
     header h2 {
         font-size: 1.6em;
         margin-bottom: 10px;
-        width: 100%;
+        width: 100%; /* Take full width */
     }
 
     .header-controls {
@@ -810,14 +941,14 @@ header h2 {
     }
 
     .language-switcher {
-        flex-grow: 1; /* Make language buttons take more space */
+        flex-grow: 1;
         display: flex;
-        justify-content: flex-end;
+        justify-content: flex-end; /* Push language switcher to right */
     }
 
     .login-card {
-        padding: 30px 20px;
-        margin: 20px;
+        padding: 25px 20px;
+        margin: 15px;
     }
 
     .login-card h2 {
@@ -825,7 +956,7 @@ header h2 {
     }
 
     .auth-toggle-buttons button {
-        font-size: 1em;
+        font-size: 0.95em;
         padding: 10px 12px;
     }
 
@@ -865,16 +996,16 @@ header h2 {
 
     .form-card button {
         width: 100%;
-        margin-inline-start: 0; /* No margin on smaller screens */
-        margin-top: 10px;
+        margin-inline-start: 0; /* Remove horizontal margin */
+        margin-top: 10px; /* Add vertical margin */
     }
 
     .form-card button[type="submit"] + .cancel-btn {
-        margin-top: 10px; /* Ensure space when stacking */
+        margin-top: 10px;
     }
 
     .chat-container {
-        height: 450px; /* Shorter chat on mobile */
+        height: 400px;
     }
 
     .chat-messages {
@@ -901,11 +1032,11 @@ header h2 {
     }
 
     .cards {
-        grid-template-columns: 1fr; /* Stack cards on small screens */
+        grid-template-columns: 1fr; /* Single column on mobile */
     }
 }
 
-/* Tablets and larger phones (768px to 1024px) */
+/* Tablets and larger phones (769px to 1024px) */
 @media (min-width: 769px) and (max-width: 1024px) {
     .sidebar {
         width: 250px;
@@ -942,105 +1073,10 @@ header h2 {
     }
 
     .login-card {
-        max-width: 400px;
+        max-width: 380px;
     }
 
     .cards {
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     }
-}/* Mobile devices (less than 768px) */
-@media (max-width: 768px) {
-    /* قواعد CSS خاصة بالشاشات الصغيرة جداً */
-}
-
-/* Tablets and larger phones (768px to 1024px) */
-@media (min-width: 769px) and (max-width: 1024px) {
-    /* قواعد CSS خاصة بالشاشات المتوسطة */
-}
-.login-card {
-    background: #ffffff;
-    padding: 40px; /* <--- سنعدل هذا */
-    border-radius: 12px;
-    box-shadow: 0 10px 30px var(--shadow-medium);
-    width: 100%;
-    max-width: 380px; /* <--- هذه القيمة التي اقترحناها سابقاً، يمكن تعديلها أكثر */
-    text-align: center;
-    animation: fadeIn 0.5s ease-out;
-}
-.login-card {
-    background: #ffffff;
-    padding: 30px; /* تقليل الحشوة الداخلية */
-    border-radius: 12px;
-    box-shadow: 0 10px 30px var(--shadow-medium);
-    width: 100%;
-    max-width: 360px; /* تصغير العرض الأقصى قليلاً */
-    text-align: center;
-    animation: fadeIn 0.5s ease-out;
-}
-.login-page {
-    display: none;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh; /* <--- هذا هو السطر الذي نتحكم به في الطول */
-    width: 100%;
-    background: linear-gradient(135deg, var(--primary-color) 0%, #6dd5ed 100%);
-    padding: 20px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-}
-@media (max-width: 768px) {
-    /* ... أكواد أخرى ... */
-    .login-card {
-        padding: 30px 20px; /* يمكن تعديل الحشوة هنا للجوال */
-        margin: 20px; /* هامش من الجوانب */
-    }
-    /* ... أكواد أخرى ... */
-}
-/* في الجزء العام من style.css */
-.login-card {
-    background: #ffffff;
-    padding: 30px; /* تم التعديل */
-    border-radius: 12px;
-    box-shadow: 0 10px 30px var(--shadow-medium);
-    width: 100%;
-    max-width: 360px; /* تم التعديل */
-    text-align: center;
-    animation: fadeIn 0.5s ease-out;
-}
-
-/* في قسم Media Queries للشاشات الصغيرة */
-@media (max-width: 768px) {
-    /* ... أكواد أخرى ... */
-    .login-card {
-        padding: 30px 20px; /* حشوة مناسبة للجوال */
-        margin: 20px; /* هامش من الجوانب على الجوال */
-    }
-    /* ... أكواد أخرى ... */
-}
-#register-form {
-    max-height: 350px; /* يمكنك تعديل هذا الارتفاع حسب الحاجة */
-    overflow-y: auto;  /* هذا هو ما ينشئ شريط التمرير العمودي */
-    padding-inline-end: 15px; /* لإضافة مسافة داخلية على اليمين لعدم تداخل المحتوى مع شريط التمرير */
-    padding-inline-start: 5px; /* مسافة بسيطة على اليسار */
-}
-
-/* لتحسين مظهر شريط التمرير (اختياري، وقد لا يعمل على جميع المتصفحات) */
-#register-form::-webkit-scrollbar {
-    width: 8px; /* عرض شريط التمرير */
-}
-
-#register-form::-webkit-scrollbar-track {
-    background: var(--background-light); /* خلفية مسار شريط التمرير */
-    border-radius: 10px;
-}
-
-#register-form::-webkit-scrollbar-thumb {
-    background: var(--primary-color); /* لون مقبض شريط التمرير */
-    border-radius: 10px;
-}
-
-#register-form::-webkit-scrollbar-thumb:hover {
-    background: #3a7bd5; /* لون المقبض عند التمرير عليه */
 }
