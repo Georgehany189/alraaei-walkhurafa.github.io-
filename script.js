@@ -80,11 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const spiritualEntriesList = document.getElementById('spiritual-entries-list');
     const cancelAddSpiritualEntryBtn = document.getElementById('cancel-add-spiritual-entry');
 
-    // Chat Section Elements
-    const chatMessagesContainer = document.getElementById('chat-messages');
-    const chatInput = document.getElementById('chat-input');
-    const chatSendBtn = document.getElementById('chat-send-btn');
-
 
     // --- Helper Functions ---
 
@@ -449,10 +444,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (sectionId === 'spiritual-life') {
             renderSpiritualEntries();
         }
-        // Chat messages don't need re-rendering, just ensure scroll
-        if (sectionId === 'chat') {
-            chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
-        }
     }
 
     // Add event listeners for sidebar navigation
@@ -524,7 +515,7 @@ document.addEventListener('DOMContentLoaded', () => {
             dateAdded: new Date().toISOString()
         };
         if (!priest_app_data.tasks) {
-            priest_app_data.tasks = [];
+            prist_app_data.tasks = [];
         }
         priest_app_data.tasks.push(newTask);
         saveData();
@@ -867,80 +858,6 @@ document.addEventListener('DOMContentLoaded', () => {
         saveData();
         renderSpiritualEntries();
     }
-
-    // --- AI Chat Logic ---
-
-    // Function to append messages to chat
-    function appendMessage(message, isUser = true) {
-        const messageElement = document.createElement('div');
-        messageElement.classList.add('message');
-        const senderName = isUser ? currentUser.name : 'شهاب'; // AI name is شهاب
-        const senderClass = isUser ? 'user-message' : 'ai-message';
-        messageElement.classList.add(senderClass);
-        messageElement.innerHTML = `<strong>${senderName}:</strong> ${message}`;
-        chatMessagesContainer.appendChild(messageElement);
-        chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight; // Scroll to bottom
-    }
-
-    // Simulate AI response (شهاب) - INSTANTANEOUS RESPONSE
-    function getAiResponse(userMessage) {
-        userMessage = userMessage.toLowerCase(); // For easier matching
-        let aiResponse = "آسف، أنا شهاب، مساعدك في هذا التطبيق. معرفتي محدودة بالمعلومات المخزنة لدي. هل يمكنني مساعدتك بشيء يتعلق بالمهام أو الاعترافات أو العظات أو الحياة الروحية؟";
-
-        if (userMessage.includes("مرحبا") || userMessage.includes("سلام")) {
-            aiResponse = "مرحباً بك! أنا شهاب، مساعدك الذكي في تطبيق 'الراعي والخراف'. كيف يمكنني مساعدتك اليوم؟";
-        } else if (userMessage.includes("كيف حالك")) {
-            aiResponse = "أنا بخير بفضل مساعدتك. شكراً على سؤالك، آمل أن تكون بخير أنت أيضاً!";
-        } else if (userMessage.includes("من انت") || userMessage.includes("ما اسمك")) {
-            aiResponse = "أنا شهاب، مساعدك الشخصي في هذا التطبيق. تم تدريبي للمساعدة في تنظيم المهام والاعترافات والعظات وإدخالات الحياة الروحية. ليس لدي وعي أو مشاعر، أنا مجرد برنامج.";
-        } else if (userMessage.includes("مهام")) {
-            aiResponse = "لإدارة المهام، انتقل إلى قسم 'المهام' في الشريط الجانبي. يمكنك إضافة مهام جديدة وتحديد ما تم إنجازه لمساعدتك على البقاء منظمًا.";
-        } else if (userMessage.includes("اعترافات")) {
-            aiResponse = "يمكنك تسجيل اعترافاتك في قسم 'الاعترافات'. هذا يساعدك على تذكرها ومتابعتها بانتظام. هل تحتاج مساعدة في كيفية الإضافة؟";
-        } else if (userMessage.includes("عظات")) {
-            aiResponse = "في قسم 'العظات'، يمكنك إضافة نصوص عظات وتاريخها للرجوع إليها لاحقًا أو لمراجعتها. هذا مفيد للحفاظ على سجل لمواعظك الروحية.";
-        } else if (userMessage.includes("الحياة الروحية") || userMessage.includes("روحي") || userMessage.includes("نمو روحي")) {
-            aiResponse = "قسم 'الحياة الروحية' مصمم لمساعدتك على تتبع نموك الروحي وإنجازاتك الشخصية في رحلتك الروحية. يمكنك تسجيل تأملاتك أو تجاربك الهامة هنا.";
-        } else if (userMessage.includes("شكرا") || userMessage.includes("شكر")) {
-            aiResponse = "على الرحب والسعة! أنا سعيد بتقديم المساعدة. لا تتردد في طرح المزيد من الأسئلة.";
-        } else if (userMessage.includes("معلومات") || userMessage.includes("معرفة") || userMessage.includes("مصدر") || userMessage.includes("بحث")) {
-            aiResponse = "أنا شهاب، ونطاق معرفتي يقتصر على البيانات التي تمت برمجتها وتدريبي عليها داخل هذا التطبيق. ليس لدي وصول مباشر للإنترنت للبحث عن معلومات عالمية أو تحديد مصادر. لأسئلة المعرفة العامة أو البحث عن مصادر خارجية، ستحتاج إلى استخدام محرك بحث أو أداة ذكاء اصطناعي متصلة بالويب.";
-        } else if (userMessage.includes("مساعدة")) {
-            aiResponse = "أستطيع مساعدتك في إدارة بياناتك الشخصية داخل التطبيق (المهام، الاعترافات، العظات، الحياة الروحية). فقط أخبرني بما تحتاج، أو اختر قسماً من الشريط الجانبي.";
-        } else if (userMessage.includes("تاريخ اليوم") || userMessage.includes("ما هو التاريخ")) {
-            aiResponse = "اليوم هو " + new Date().toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) + ".";
-        } else if (userMessage.includes("وقت الان") || userMessage.includes("كم الساعة")) {
-            aiResponse = "الوقت الحالي هو " + new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' }) + ".";
-        } else if (userMessage.includes("قواعد")) {
-            aiResponse = "أنا أعمل وفقًا للقواعد المبرمجة مسبقًا. مهمتي هي تسهيل استخدامك للتطبيق وليس اتخاذ قرارات بدلاً منك.";
-        } else if (userMessage.includes("ميزات") || userMessage.includes("ماذا تفعل")) {
-            aiResponse = "أنا أساعدك في تتبع المهام، تسجيل الاعترافات، حفظ العظات، وتوثيق رحلتك الروحية. كما يمكنك الدردشة معي للحصول على توجيهات حول استخدام التطبيق.";
-        }
-
-        // Removed setTimeout here to make the response immediate
-        appendMessage(aiResponse, false);
-    }
-
-    // Handle chat message sending
-    chatSendBtn.addEventListener('click', () => {
-        sendMessage();
-    });
-
-    chatInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            sendMessage();
-        }
-    });
-
-    function sendMessage() {
-        const messageText = chatInput.value.trim();
-        if (messageText) {
-            appendMessage(messageText, true);
-            getAiResponse(messageText); // AI responds immediately
-            chatInput.value = ''; // Clear input field
-        }
-    }
-
 
     // --- Initial Load ---
     loadData(); // Load user data and decide which page to show

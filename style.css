@@ -1,701 +1,566 @@
-/* General Resets and Base Styles */
+/* General Styling */
+:root {
+    --primary-color: #3f51b5; /* Indigo */
+    --primary-dark: #303f9f;
+    --primary-light: #c5cae9;
+    --accent-color: #ff4081; /* Pink A200 */
+    --text-color: #212121;
+    --secondary-text: #757575;
+    --divider-color: #bdbdbd;
+    --background-color: #f5f5f5;
+    --card-background: #ffffff;
+    --success-color: #4CAF50;
+    --error-color: #F44336;
+    --warning-color: #FFC107;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-}
-
-:root {
-    /* Updated Color Palette for more warmth and professionalism */
-    --primary-color: #5C6BC0;   /* Deeper Blue-Violet (Indigo) */
-    --secondary-color: #78909C; /* Muted Blue-Grey */
-    --accent-color: #FFB300;    /* Warm Amber for accents */
-    --background-light: #ECEFF1; /* Very light grey, almost off-white */
-    --background-dark: #CFD8DC;  /* Slightly darker grey for cards/sections */
-    --text-dark: #263238;       /* Dark charcoal for main text */
-    --text-light: #FFFFFF;      /* White for text on dark backgrounds */
-    --border-color: #B0BEC5;    /* Soft border color */
-    --shadow-light: rgba(0, 0, 0, 0.08); /* Lighter, subtle shadow */
-    --shadow-medium: rgba(0, 0, 0, 0.15); /* Slightly more pronounced shadow */
-    --red-error: #D32F2F;       /* Stronger red for errors */
-    --green-success: #388E3C;   /* Deeper green for success */
-}
-
-html {
-    font-family: 'Cairo', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; /* More versatile font stack, Cairo for Arabic */
-    line-height: 1.6;
-    color: var(--text-dark);
-    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    background-color: var(--background-light);
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    overflow-x: hidden; /* Prevent horizontal scrollbar */
-    /* Uncomment and add your background image if desired, ensure it's subtle */
-    /* background-image: url('1000116921.jpg'); */
-    /* background-repeat: repeat; */
-    /* background-size: 150px; /* Adjust size for subtle pattern */
-    /* opacity: 0.3; /* Make it very subtle */
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+    direction: rtl; /* Right-to-left for Arabic */
+    text-align: right; /* Align text to the right */
 }
 
-/* --- Login Page Styling --- */
+/* Authentication Page */
 .login-page {
-    display: none; /* Controlled by JS */
+    display: none; /* Hidden by default, activated by JS */
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    width: 100%;
-    /* Deeper, richer gradient */
-    background: linear-gradient(135deg, var(--primary-color) 0%, #7986CB 100%);
-    padding: 20px;
-    position: fixed; /* To cover the whole screen */
-    top: 0;
-    left: 0;
-    z-index: 1000;
+    background: linear-gradient(to right, var(--primary-color), var(--primary-dark));
 }
 
 .login-page.active {
     display: flex;
 }
 
-.login-card {
-    background: #ffffff;
-    padding: 30px; /* Reduced padding for tighter feel */
-    border-radius: 12px;
-    box-shadow: 0 8px 25px var(--shadow-medium); /* Softer shadow */
-    width: 100%;
-    max-width: 360px; /* Optimized max-width */
-    text-align: center;
-    animation: fadeIn 0.5s ease-out;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.login-card h2 {
-    color: var(--primary-color);
-    margin-bottom: 25px;
-    font-size: 2em; /* Slightly smaller for better fit */
-    font-weight: 600;
-}
-
-.auth-toggle-buttons {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 30px;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 10px;
-}
-
-.auth-toggle-buttons button {
-    background-color: transparent;
-    border: none;
-    padding: 12px 20px;
-    font-size: 1em;
-    cursor: pointer;
-    color: var(--secondary-color);
-    transition: color 0.3s, border-bottom 0.3s, font-weight 0.3s; /* Added smooth transition */
-    outline: none;
-    border-radius: 4px;
-}
-
-.auth-toggle-buttons button.active {
-    color: var(--primary-color);
-    border-bottom: 3px solid var(--primary-color);
-    font-weight: bold;
-}
-
-.auth-form {
-    display: none; /* Controlled by JS */
-    animation: slideInFromTop 0.4s ease-out;
-}
-
-.auth-form.active {
-    display: block;
-}
-
-@keyframes slideInFromTop {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.auth-form p {
-    font-size: 0.9em;
-    color: var(--secondary-color);
-    margin-bottom: 20px;
-}
-
-.form-group {
-    margin-bottom: 18px;
-    text-align: right; /* For RTL languages */
-    position: relative; /* Added for password toggle icon positioning */
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-    color: var(--text-dark);
-    font-size: 0.9em;
-}
-
-.form-group input[type="email"],
-.form-group input[type="password"],
-.form-group input[type="text"],
-.form-group input[type="date"],
-.form-group input[type="number"],
-.form-group textarea,
-.form-group select {
-    width: 100%;
-    padding: 12px 15px;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    font-size: 1em;
-    color: var(--text-dark);
-    background-color: var(--background-light); /* Lighter background for inputs */
-    transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition on focus */
-}
-
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(92, 107, 192, 0.2); /* Shadow matches primary color */
-    outline: none;
-}
-
-/* Password Toggle Icon Styling */
-.password-group input[type="password"],
-.password-group input[type="text"] { /* Adjust padding for icon */
-    padding-inline-end: 45px; /* Make space for the icon (for RTL) */
-}
-
-.toggle-password {
-    position: absolute;
-    left: 15px; /* Position from the left (for RTL) */
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: var(--secondary-color);
-    font-size: 1.1em;
-    transition: color 0.3s;
-    /* Ensure icon is above input field but inside the password-group div */
-    z-index: 10;
-}
-
-.toggle-password:hover {
-    color: var(--primary-color);
-}
-
-
-/* Validation error messages */
-.validation-error {
-    color: var(--red-error);
-    font-size: 0.85em;
-    margin-top: 5px;
-    text-align: right; /* For RTL */
-    display: block;
-    height: 1.2em; /* To maintain consistent layout spacing */
-    opacity: 0; /* Hidden by default */
-    transition: opacity 0.3s ease;
-}
-
-.validation-error.active {
-    opacity: 1;
-}
-
-/* Global success/error messages */
-.message-display {
-    text-align: center;
-    padding: 10px 15px;
-    border-radius: 8px;
-    margin-top: 20px;
-    font-weight: 500;
-    font-size: 0.95em;
-    display: none; /* Hidden by default */
-    animation: fadeIn 0.5s ease-out;
-}
-
-.message-display.success {
-    background-color: rgba(56, 142, 60, 0.1);
-    color: var(--green-success);
-    border: 1px solid var(--green-success);
-}
-
-.message-display.error {
-    background-color: rgba(211, 47, 47, 0.1);
-    color: var(--red-error);
-    border: 1px solid var(--red-error);
-}
-
-/* Scrollbar for register form */
-#register-form {
-    max-height: 350px;
-    overflow-y: auto;
-    padding-inline-end: 15px; /* For scrollbar on left in RTL */
-    padding-inline-start: 5px;
-    margin-bottom: 15px;
-}
-
-/* Custom scrollbar styling (for WebKit browsers) */
-#register-form::-webkit-scrollbar {
-    width: 8px;
-}
-
-#register-form::-webkit-scrollbar-track {
-    background: var(--background-light);
+.auth-card {
+    background-color: var(--card-background);
+    padding: 30px 40px;
     border-radius: 10px;
-}
-
-#register-form::-webkit-scrollbar-thumb {
-    background: var(--primary-color);
-    border-radius: 10px;
-}
-
-#register-form::-webkit-scrollbar-thumb:hover {
-    background: #4B5A9A;
-}
-
-.login-card button[type="submit"] {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     width: 100%;
-    padding: 15px;
-    background-color: var(--primary-color);
-    color: var(--text-light);
-    border: none;
-    border-radius: 8px;
-    font-size: 1.1em;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
-    margin-top: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.login-card button[type="submit"]:hover {
-    background-color: #4B5A9A;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-}
-
-.or-separator {
+    max-width: 450px;
     text-align: center;
-    margin: 30px 0;
     position: relative;
-    font-size: 0.9em;
-    color: var(--secondary-color);
-}
-
-.or-separator::before,
-.or-separator::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    width: 40%;
-    height: 1px;
-    background-color: var(--border-color);
-}
-
-.or-separator::before {
-    left: 0;
-}
-
-.or-separator::after {
-    right: 0;
-}
-
-/* Social Sign-In Buttons */
-.g_id_signin {
-    margin: 15px auto;
-    display: block;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
     overflow: hidden;
 }
 
-.error-message { /* General error message, typically used for JS-controlled messages */
-    color: var(--red-error);
-    text-align: center;
-    margin-top: 20px;
-    font-size: 0.9em;
-    font-weight: 500;
-    background-color: rgba(211, 47, 47, 0.1);
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid var(--red-error);
+.auth-toggle {
+    display: flex;
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--divider-color);
 }
 
-/* --- Main App Container (Sidebar + Content) --- */
+.auth-toggle button {
+    flex: 1;
+    padding: 12px 15px;
+    border: none;
+    background-color: transparent;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: var(--secondary-text);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px; /* Compensate for border-bottom */
+}
+
+.auth-toggle button.active {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.auth-form {
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.auth-form.active {
+    display: flex;
+}
+
+.auth-form h2 {
+    color: var(--primary-dark);
+    margin-bottom: 20px;
+    font-size: 1.8em;
+}
+
+.input-group {
+    position: relative;
+    text-align: right; /* Ensure labels and inputs align right */
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--secondary-text);
+    font-size: 0.95em;
+}
+
+.input-group input[type="email"],
+.input-group input[type="password"],
+.input-group input[type="text"],
+.input-group input[type="date"],
+.input-group input[type="number"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--divider-color);
+    border-radius: 6px;
+    font-size: 1em;
+    color: var(--text-color);
+    transition: border-color 0.3s ease;
+    padding-left: 40px; /* Space for password toggle icon */
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(63, 81, 181, 0.2);
+}
+
+.password-toggle {
+    position: absolute;
+    left: 15px; /* Position to the left for RTL */
+    top: 50%;
+    transform: translateY(15%); /* Adjust for label height */
+    cursor: pointer;
+    color: var(--secondary-text);
+    font-size: 0.9em;
+}
+
+.password-toggle i {
+    pointer-events: none; /* Make sure click goes to parent span */
+}
+
+.auth-btn {
+    width: 100%;
+    padding: 12px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 15px;
+}
+
+.auth-btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.social-login {
+    margin-top: 20px;
+    border-top: 1px solid var(--divider-color);
+    padding-top: 20px;
+}
+
+.social-login p {
+    color: var(--secondary-text);
+    margin-bottom: 15px;
+    font-size: 0.9em;
+}
+
+/* Google Sign-In button specific styling */
+.g_id_signin {
+    display: flex; /* Makes the button itself a flex container */
+    justify-content: center; /* Centers content horizontally */
+    margin-top: 10px;
+}
+
+/* Validation Errors */
+.validation-error {
+    color: var(--error-color);
+    font-size: 0.85em;
+    margin-top: 5px;
+    display: block; /* Ensures it takes its own line */
+    text-align: right;
+    height: 0; /* Initially hidden */
+    overflow: hidden;
+    transition: height 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+}
+
+.validation-error.active {
+    height: 20px; /* Show error by giving it height */
+    opacity: 1;
+}
+
+.global-message {
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    font-size: 0.95em;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    display: none; /* Hidden by default, shown by JS */
+}
+
+.global-message.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.global-message.success {
+    background-color: #e8f5e9; /* Light green */
+    color: var(--success-color);
+    border: 1px solid var(--success-color);
+}
+
+.global-message.error {
+    background-color: #ffebee; /* Light red */
+    color: var(--error-color);
+    border: 1px solid var(--error-color);
+}
+
+
+/* Main App Layout */
 .container {
     display: flex;
     min-height: 100vh;
-    width: 100%;
-    background-color: var(--background-light);
-    display: none; /* Controlled by JS */
-    overflow: hidden; /* Prevent content overflow issues */
+    transition: all 0.3s ease;
 }
 
 /* Sidebar */
 .sidebar {
-    width: 280px;
+    width: 250px;
     background-color: var(--primary-color);
-    color: var(--text-light);
-    padding: 30px 20px;
-    box-shadow: 2px 0 10px var(--shadow-medium);
+    color: white;
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    transition: transform 0.3s ease-in-out;
-    z-index: 900;
-    position: sticky; /* Keeps sidebar fixed when scrolling */
+    position: sticky;
     top: 0;
     height: 100vh;
 }
 
-.sidebar .logo {
-    text-align: center;
-    margin-bottom: 40px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
 }
 
-.sidebar .logo h1 {
-    font-size: 2.2em;
-    font-weight: 700;
-    color: var(--text-light);
-    letter-spacing: 1px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+.sidebar-header h3 {
+    font-size: 1.5em;
+    font-weight: 600;
 }
 
 .sidebar nav ul {
     list-style: none;
-    flex-grow: 1; /* Allows nav to take available space */
-    margin-top: 20px;
 }
 
 .sidebar nav ul li {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .sidebar nav ul li a {
-    display: block;
-    color: var(--text-light);
+    color: white;
     text-decoration: none;
     padding: 12px 15px;
+    display: block;
     border-radius: 8px;
-    transition: background-color 0.3s, color 0.3s, transform 0.2s;
-    font-size: 1.05em;
-    font-weight: 500;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 1.1em;
+}
+
+.sidebar nav ul li a:hover,
+.sidebar nav ul li.active a {
+    background-color: var(--primary-dark);
+    color: var(--accent-color);
+}
+
+.sidebar nav ul li a i {
+    margin-left: 10px; /* Margin to the left of the icon for RTL */
+    font-size: 1.2em;
+}
+
+.sidebar .logout-btn {
+    margin-top: auto; /* Pushes the logout button to the bottom */
+    width: 100%;
+    padding: 12px 15px;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
     display: flex;
     align-items: center;
-    gap: 10px; /* Space between icon and text */
+    justify-content: center;
 }
 
-.sidebar nav ul li a:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    transform: translateX(5px);
+.sidebar .logout-btn:hover {
+    background-color: #d81b60; /* Darker accent */
 }
 
-.sidebar nav ul li.active a {
-    background-color: var(--accent-color);
-    color: var(--text-dark);
-    font-weight: 700;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    transform: translateX(0); /* Reset transform for active */
+.sidebar .logout-btn i {
+    margin-left: 10px;
 }
 
-.sidebar nav ul li.active a:hover {
-    background-color: var(--accent-color);
-    color: var(--text-dark);
-}
 
 /* Main Content Area */
 .main-content {
     flex-grow: 1;
     padding: 30px;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--background-light);
-    overflow-y: auto; /* Allow main content to scroll */
+    background-color: var(--background-color);
 }
 
-header {
-    background-color: #ffffff;
-    padding: 20px 30px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px var(--shadow-light);
-    margin-bottom: 30px;
+.main-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: sticky; /* Keep header fixed on scroll */
-    top: 0;
-    z-index: 500;
-    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--divider-color);
 }
 
-header h2 {
-    font-size: 1.8em;
-    color: var(--primary-color);
-    font-weight: 600;
-    margin-inline-end: 20px; /* For RTL */
+.main-header h1 {
+    color: var(--primary-dark);
+    font-size: 2em;
+    margin: 0;
 }
 
-.header-controls {
+.main-header .logout-btn {
+    background-color: var(--error-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
     display: flex;
     align-items: center;
-    gap: 15px;
 }
 
-.hamburger-menu {
-    display: none; /* Hidden by default on desktop */
-    background: none;
-    border: none;
-    font-size: 1.8em;
-    color: var(--primary-color);
-    cursor: pointer;
-    padding: 5px;
-    transition: transform 0.3s ease;
+.main-header .logout-btn:hover {
+    background-color: #d32f2f;
 }
 
-.container.sidebar-open .hamburger-menu {
-    transform: rotate(90deg); /* Rotate hamburger when sidebar is open */
-}
-
-.language-switcher button {
-    background-color: var(--secondary-color);
-    color: var(--text-light);
-    border: none;
-    padding: 8px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.9em;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-.language-switcher button:hover {
-    background-color: #607D8B;
-    transform: translateY(-1px);
+.main-header .logout-btn i {
+    margin-left: 8px;
 }
 
 /* Content Sections */
 .content-section {
-    display: none; /* Controlled by JS */
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px var(--shadow-light);
-    margin-bottom: 30px;
-    flex-grow: 1; /* Takes available space */
-    animation: fadeIn 0.5s ease-out;
+    display: none;
+    background-color: var(--card-background);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    margin-bottom: 25px;
 }
 
 .content-section.active {
     display: block;
+    animation: fadeIn 0.6s ease-out;
 }
 
-.content-section h3 {
-    font-size: 1.6em;
-    color: var(--text-dark);
-    margin-bottom: 20px;
-    border-bottom: 2px solid var(--border-color);
-    padding-bottom: 10px;
-}
-
-.content-section p {
-    color: var(--secondary-color);
-    margin-bottom: 15px;
-}
-
-/* Cards (e.g., Dashboard) */
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
-    margin-top: 20px;
-}
-
-.card {
-    background-color: var(--background-dark);
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 1px 5px var(--shadow-light);
-    text-align: right; /* For RTL */
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
-}
-
-.card h4 {
-    font-size: 1.2em;
+.content-section h2 {
     color: var(--primary-color);
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--primary-light);
+    padding-bottom: 10px;
+    font-size: 1.7em;
+}
+
+/* Dashboard Specifics */
+.user-info-card {
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.user-info-card h3 {
+    margin-bottom: 15px;
+    font-size: 1.4em;
+    color: var(--primary-dark);
+}
+
+.user-info-card p {
+    font-size: 1.1em;
+    margin-bottom: 8px;
+}
+
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.stat-card {
+    background-color: var(--card-background);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.stat-card h3 {
+    color: var(--primary-color);
+    font-size: 1.2em;
     margin-bottom: 10px;
 }
 
-.card p {
-    font-size: 0.9em;
-    color: var(--secondary-color);
+.stat-card p {
+    font-size: 2em;
+    font-weight: bold;
+    color: var(--accent-color);
 }
 
-/* Add/Form Buttons */
+/* Form Styles (Tasks, Confessions, Sermons, Spiritual Life) */
 .add-btn {
-    background-color: var(--green-success);
-    color: var(--text-light);
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
     border: none;
-    padding: 12px 20px;
     border-radius: 8px;
-    font-size: 1em;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
-    margin-bottom: 25px;
-    display: inline-flex; /* To align icon and text */
+    font-size: 1em;
+    margin-bottom: 20px;
+    display: flex;
     align-items: center;
     gap: 8px; /* Space between icon and text */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
 }
 
 .add-btn:hover {
-    background-color: #2E7D32;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: var(--primary-dark);
 }
 
 .add-btn i {
-    font-size: 1em;
+    margin-left: 5px; /* Adjust icon margin for RTL */
 }
 
-.form-card {
-    background-color: #fefefe;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px var(--shadow-light);
-    margin-top: 25px;
-    display: none; /* Controlled by JS */
-    animation: fadeInScale 0.4s ease-out;
-}
-
-@keyframes fadeInScale {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-}
-
-.form-card h4 {
-    font-size: 1.5em;
-    color: var(--text-dark);
-    margin-bottom: 25px;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 10px;
-}
-
-.form-card button[type="submit"] {
-    background-color: var(--primary-color);
-    color: var(--text-light);
-    border: none;
-    padding: 12px 25px;
+.add-form {
+    background-color: var(--primary-light);
+    padding: 20px;
     border-radius: 8px;
+    margin-bottom: 20px;
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    gap: 15px;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.add-form input[type="text"],
+.add-form input[type="date"],
+.add-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--divider-color);
+    border-radius: 6px;
     font-size: 1em;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
-    margin-top: 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    color: var(--text-color);
+    background-color: var(--card-background);
 }
 
-.form-card button[type="submit"]:hover {
-    background-color: #4B5A9A;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+.add-form input:focus,
+.add-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(63, 81, 181, 0.2);
 }
 
-.form-card .cancel-btn {
-    background-color: var(--secondary-color);
-    color: var(--text-light);
+.add-form textarea {
+    resize: vertical; /* Allow vertical resizing */
+    min-height: 80px;
+}
+
+.add-form .submit-btn,
+.add-form .cancel-btn {
+    padding: 10px 15px;
     border: none;
-    padding: 12px 25px;
-    border-radius: 8px;
-    font-size: 1em;
+    border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
-    margin-top: 20px;
-    margin-inline-start: 15px; /* For RTL */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 1em;
+    transition: background-color 0.3s ease;
 }
 
-.form-card .cancel-btn:hover {
-    background-color: #607D8B;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+.add-form .submit-btn {
+    background-color: var(--success-color);
+    color: white;
 }
 
-/* List Items (Confessions, Sermons, Spiritual Life, Tasks) */
-.confessions-list,
-.sermons-list,
-.spiritual-entries-list,
-.tasks-list {
-    margin-top: 20px;
-    display: grid; /* Use grid for consistent spacing */
+.add-form .submit-btn:hover {
+    background-color: #388e3c;
+}
+
+.add-form .cancel-btn {
+    background-color: var(--secondary-text);
+    color: white;
+    margin-left: 10px; /* Spacing between buttons */
+}
+
+.add-form .cancel-btn:hover {
+    background-color: #616161;
+}
+
+/* Data List (Tasks, Confessions, Sermons, Spiritual Life) */
+.data-list {
+    display: flex;
+    flex-direction: column;
     gap: 15px;
 }
 
-/* Placeholder for empty lists */
-.confessions-list > p,
-.sermons-list > p,
-.spiritual-entries-list > p,
-.tasks-list > p {
-    color: var(--secondary-color);
-    font-style: italic;
-    text-align: center;
-    padding: 20px;
-    border: 1px dashed var(--border-color);
+.task-item {
+    background-color: var(--card-background);
+    padding: 15px 20px;
     border-radius: 8px;
-    background-color: var(--background-dark);
-}
-
-.task-item { /* Used for all list items */
-    background-color: var(--background-dark);
-    padding: 18px 20px;
-    border-radius: 10px;
-    box-shadow: 0 1px 5px var(--shadow-light);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-right: 5px solid var(--primary-color); /* Indicator for active/new */
 }
 
 .task-item:hover {
-    background-color: #DEE4E7;
-    transform: translateY(-3px);
+    transform: translateY(-2px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .task-item.completed {
-    background-color: #E8F5E9; /* Light green for completed tasks */
+    border-right-color: var(--success-color);
     opacity: 0.8;
-    text-decoration: line-through;
-    color: var(--secondary-color);
 }
 
-.task-item-info {
-    flex-grow: 1;
-    text-align: right; /* For RTL */
-    padding-inline-end: 15px; /* For RTL */
+.task-item.completed .task-item-info h4 {
+    text-decoration: line-through;
+    color: var(--secondary-text);
 }
 
 .task-item-info h4 {
-    font-size: 1.1em;
-    color: var(--text-dark);
     margin-bottom: 5px;
+    color: var(--text-color);
+    font-size: 1.1em;
 }
 
 .task-item-info p {
-    font-size: 0.85em;
-    color: var(--secondary-color);
-    margin: 0;
+    color: var(--secondary-text);
+    font-size: 0.9em;
 }
 
 .task-actions {
@@ -704,371 +569,157 @@ header h2 {
     gap: 10px;
 }
 
-.task-actions .action-btn {
+.complete-checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--primary-color); /* Style checkbox */
+}
+
+.action-btn {
     background: none;
     border: none;
     cursor: pointer;
     font-size: 1.1em;
-    color: var(--secondary-color);
-    transition: color 0.3s, transform 0.2s;
-    padding: 5px;
-    border-radius: 50%;
-}
-
-.task-actions .action-btn:hover {
-    transform: scale(1.1);
-    color: var(--primary-color);
-}
-
-.task-actions .complete-btn { /* Specific for task completion button (checkbox might override visual) */
-    color: var(--green-success);
-}
-
-.task-actions .complete-btn:hover {
-    color: #2E7D32;
-}
-
-.task-actions .delete-btn {
-    color: var(--red-error);
-}
-
-.task-actions .delete-btn:hover {
-    color: #C62828;
-}
-
-/* Checkbox specific styling */
-.task-actions input[type="checkbox"] {
-    appearance: none; /* Hide default checkbox */
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--green-success);
+    padding: 8px;
     border-radius: 5px;
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    transition: background-color 0.3s, border-color 0.3s;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.task-actions input[type="checkbox"]:checked {
-    background-color: var(--green-success);
-    border-color: var(--green-success);
+.action-btn i {
+    pointer-events: none; /* Allows click on button, not just icon */
 }
 
-.task-actions input[type="checkbox"]:checked::after {
-    content: '\2713'; /* Checkmark character */
-    font-size: 14px;
+.action-btn.delete-btn {
+    color: var(--error-color);
+}
+
+.action-btn.delete-btn:hover {
+    background-color: var(--error-color);
     color: white;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
 
-
-/* --- AI Chat Styling --- */
-.chat-container {
-    display: flex;
-    flex-direction: column;
-    height: 600px; /* Fixed height for chat window */
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    overflow: hidden; /* To contain messages and input */
-    background-color: #fcfcfc;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.03);
+.action-btn.complete-btn { /* For confessions, sermons, spiritual life */
+    color: var(--success-color);
 }
 
-.chat-messages {
-    flex-grow: 1; /* Takes all available height */
+.action-btn.complete-btn:hover {
+    background-color: var(--success-color);
+    color: white;
+}
+
+/* Settings Section */
+.settings-card {
+    background-color: var(--primary-light);
     padding: 20px;
-    overflow-y: auto; /* Scrollable message area */
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.settings-card h3 {
+    color: var(--primary-dark);
+    margin-bottom: 15px;
+}
+
+.settings-card form {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Space between messages */
+    gap: 15px;
 }
 
-/* Custom scrollbar for chat messages */
-.chat-messages::-webkit-scrollbar {
-    width: 8px;
+.settings-card .input-group label {
+    color: var(--primary-dark);
 }
 
-.chat-messages::-webkit-scrollbar-track {
-    background: var(--background-light);
-    border-radius: 10px;
+.settings-card .submit-btn {
+    align-self: flex-start; /* Align button to the right in RTL */
+    margin-top: 10px;
 }
 
-.chat-messages::-webkit-scrollbar-thumb {
-    background: var(--secondary-color);
-    border-radius: 10px;
+/* Utility Classes */
+.desktop-only {
+    display: block;
 }
 
-.chat-messages::-webkit-scrollbar-thumb:hover {
-    background: #607D8B;
+.desktop-hidden {
+    display: none;
 }
 
-.message {
-    max-width: 80%;
-    padding: 12px 18px;
-    border-radius: 20px;
-    line-height: 1.4;
-    word-wrap: break-word; /* Ensure long words break */
-    animation: messagePop 0.3s ease-out;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-@keyframes messagePop {
-    from { transform: scale(0.8); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-}
-
-.user-message {
-    background-color: var(--primary-color);
-    color: var(--text-light);
-    align-self: flex-end; /* Align to right for user messages */
-    border-bottom-right-radius: 5px; /* Sharpen bottom-right corner */
-}
-
-.ai-message {
-    background-color: var(--background-dark);
-    color: var(--text-dark);
-    align-self: flex-start; /* Align to left for AI messages */
-    border-bottom-left-radius: 5px; /* Sharpen bottom-left corner */
-}
-
-.chat-input-area {
-    display: flex;
-    padding: 15px;
-    border-top: 1px solid var(--border-color);
-    background-color: #ffffff;
-}
-
-.chat-input-area input {
-    flex-grow: 1;
-    padding: 12px 15px;
-    border: 1px solid var(--border-color);
-    border-radius: 25px; /* Pill-shaped input */
-    font-size: 1em;
-    margin-inline-end: 10px; /* For RTL */
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-.chat-input-area input:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px rgba(92, 107, 192, 0.2);
-    outline: none;
-}
-
-.chat-input-area button {
-    background-color: var(--primary-color);
-    color: var(--text-light);
-    border: none;
-    padding: 12px 18px;
-    border-radius: 25px; /* Pill-shaped button */
-    font-size: 1.1em;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.chat-input-area button:hover {
-    background-color: #4B5A9A;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* --- Responsive Design (Media Queries) --- */
-
-/* Mobile devices (less than 768px) */
+/* Responsive Design */
 @media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
     .sidebar {
         position: fixed;
-        right: -280px; /* Hidden off-screen to the right (for RTL) */
+        right: -250px; /* Hidden off-screen to the right */
         top: 0;
-        bottom: 0;
-        height: 100vh;
+        height: 100%;
         z-index: 1000;
-        box-shadow: -5px 0 15px rgba(0,0,0,0.3); /* Shadow on the left edge */
+        transition: right 0.3s ease;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
     }
 
     .container.sidebar-open .sidebar {
-        transform: translateX(-280px); /* Slide in from right */
-    }
-
-    /* Overlay when sidebar is open */
-    .container.sidebar-open::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 950;
-    }
-
-    .hamburger-menu {
-        display: block; /* Show hamburger menu on mobile */
+        right: 0; /* Slide in */
     }
 
     .main-content {
-        padding: 15px;
+        padding: 20px;
         width: 100%;
     }
 
-    header {
-        padding: 15px 20px;
-        flex-direction: column; /* Stack items vertically */
-        align-items: flex-start;
-        gap: 10px;
-    }
-
-    header h2 {
-        font-size: 1.6em;
-        margin-bottom: 10px;
-        width: 100%; /* Take full width */
-    }
-
-    .header-controls {
-        width: 100%;
+    .main-header {
         justify-content: space-between;
+        padding-bottom: 15px;
     }
 
-    .language-switcher {
-        flex-grow: 1;
-        display: flex;
-        justify-content: flex-end; /* Push language switcher to right */
+    .main-header .desktop-only {
+        display: none; /* Hide desktop logout button on mobile */
     }
 
-    .login-card {
-        padding: 25px 20px;
-        margin: 15px;
-    }
-
-    .login-card h2 {
+    .main-header .desktop-hidden {
+        display: block; /* Show mobile hamburger menu */
         font-size: 1.8em;
+        color: var(--primary-dark);
+        cursor: pointer;
     }
 
-    .auth-toggle-buttons button {
-        font-size: 0.95em;
-        padding: 10px 12px;
-    }
-
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
-        padding: 10px;
-    }
-
-    .login-card button[type="submit"] {
-        padding: 12px;
-        font-size: 1em;
-    }
-
-    .content-section {
-        padding: 20px;
-        margin-bottom: 20px;
-    }
-
-    .content-section h3 {
-        font-size: 1.4em;
-        margin-bottom: 15px;
-    }
-
-    .add-btn {
-        padding: 10px 15px;
-        font-size: 0.9em;
-    }
-
-    .form-card {
-        padding: 20px;
-    }
-
-    .form-card h4 {
-        font-size: 1.4em;
-    }
-
-    .form-card button {
-        width: 100%;
-        margin-inline-start: 0; /* Remove horizontal margin */
-        margin-top: 10px; /* Add vertical margin */
-    }
-
-    .form-card button[type="submit"] + .cancel-btn {
-        margin-top: 10px;
-    }
-
-    .chat-container {
-        height: 400px;
-    }
-
-    .chat-messages {
-        padding: 10px;
-    }
-
-    .message {
-        padding: 10px 15px;
-        font-size: 0.9em;
-    }
-
-    .chat-input-area {
-        padding: 10px;
-    }
-
-    .chat-input-area input {
-        padding: 10px 12px;
-        font-size: 0.9em;
-    }
-
-    .chat-input-area button {
-        padding: 10px 15px;
-        font-size: 1em;
-    }
-
-    .cards {
-        grid-template-columns: 1fr; /* Single column on mobile */
-    }
-}
-
-/* Tablets and larger phones (769px to 1024px) */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .sidebar {
-        width: 250px;
-        padding: 25px 15px;
-    }
-
-    .sidebar .logo h1 {
-        font-size: 2em;
-    }
-
-    .sidebar nav ul li a {
-        font-size: 1em;
-        padding: 10px 12px;
-    }
-
-    .main-content {
-        padding: 25px;
-    }
-
-    header {
-        padding: 20px 25px;
-    }
-
-    header h2 {
+    .sidebar .hamburger-menu {
+        display: block; /* Show hamburger in sidebar header to close */
         font-size: 1.8em;
+        cursor: pointer;
+        color: white;
     }
 
-    .content-section {
-        padding: 25px;
+    .dashboard-stats {
+        grid-template-columns: 1fr; /* Stack stats on small screens */
     }
 
-    .content-section h3 {
-        font-size: 1.6em;
+    .auth-card {
+        padding: 20px;
+        margin: 20px;
     }
 
-    .login-card {
-        max-width: 380px;
+    .auth-form h2 {
+        font-size: 1.5em;
     }
 
-    .cards {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    .auth-toggle button {
+        font-size: 1em;
+        padding: 10px;
     }
 }
