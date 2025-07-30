@@ -444,7 +444,7 @@ document.addEventListener('DOMContentLoaded', () => {
             renderTasks();
         } else if (sectionId === 'confessions') {
             renderConfessions();
-        } else if (sectionId === 'sermons') {
+        } else if (sectionId === 'sermons') { // Check for 'sermons' section
             renderSermons();
         } else if (sectionId === 'spiritual-life') {
             renderSpiritualEntries();
@@ -643,7 +643,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         sermonsList.innerHTML = '';
         if (priest_app_data.sermons.length === 0) {
-            sermonsList.innerHTML = '<p>لا توجد عظات مسجلة حالياً. أضف عظة جديدة.</p>';
+            sermonsList.innerHTML = '<p>لا توجد عظات مسجلة حالياً. أضف عظة جديدة.</p>'; // Changed from خطب to عظات
             return;
         }
         priest_app_data.sermons.forEach(sermon => {
@@ -681,7 +681,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const text = sermonTextarea.value.trim();
 
         if (!title || !date || !text) {
-            showGlobalMessage('جميع حقول العظة مطلوبة.', 'error');
+            showGlobalMessage('جميع حقول العظة مطلوبة.', 'error'); // Changed from الخطبة to العظة
             return;
         }
 
@@ -697,7 +697,7 @@ document.addEventListener('DOMContentLoaded', () => {
         priest_app_data.sermons.push(newSermon);
         saveData();
         renderSermons();
-        showGlobalMessage('تمت إضافة العظة بنجاح.', 'success');
+        showGlobalMessage('تمت إضافة العظة بنجاح.', 'success'); // Changed from الخطبة to العظة
         sermonTitleInput.value = '';
         sermonDateInput.value = '';
         sermonTextarea.value = '';
@@ -707,11 +707,11 @@ document.addEventListener('DOMContentLoaded', () => {
     sermonsList.addEventListener('click', (e) => {
         if (e.target.closest('.delete-btn')) {
             const sermonId = e.target.closest('.delete-btn').dataset.sermonId;
-            if (confirm('هل أنت متأكد أنك تريد حذف هذه العظة؟')) {
+            if (confirm('هل أنت متأكد أنك تريد حذف هذه العظة؟')) { // Changed from الخطبة to العظة
                 priest_app_data.sermons = priest_app_data.sermons.filter(s => s.id !== sermonId);
                 saveData();
                 renderSermons();
-                showGlobalMessage('تم حذف العظة بنجاح.', 'success');
+                showGlobalMessage('تم حذف العظة بنجاح.', 'success'); // Changed from الخطبة to العظة
             }
         }
     });
@@ -816,7 +816,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Simple keyword-based responses
         if (userMessage.includes("مرحبا") || userMessage.includes("سلام")) {
-            aiResponse = "مرحباً بك! أنا شهاب، مساعدك الذكي في تطبيق 'الراعي والخراف'. كيف يمكنني مساعدتك اليوم؟"; // Changed message here
+            aiResponse = "مرحباً بك! أنا شهاب، مساعدك الذكي في تطبيق 'الراعي والخراف'. كيف يمكنني مساعدتك اليوم؟";
         } else if (userMessage.includes("كيف حالك")) {
             aiResponse = "أنا بخير بفضل مساعدتك. شكراً على سؤالك!";
         } else if (userMessage.includes("من انت")) {
@@ -825,8 +825,8 @@ document.addEventListener('DOMContentLoaded', () => {
             aiResponse = "لإدارة المهام، انتقل إلى قسم 'المهام' في الشريط الجانبي.";
         } else if (userMessage.includes("اعترافات")) {
             aiResponse = "يمكنك إضافة وتتبع الاعترافات في قسم 'الاعترافات'.";
-        } else if (userMessage.includes("عظات")) {
-            aiResponse = "للاطلاع على العظات أو إضافة عظات جديدة، انتقل إلى قسم 'العظات'.";
+        } else if (userMessage.includes("عظات")) { // Changed from خطب to عظات
+            aiResponse = "للاطلاع على العظات أو إضافة عظات جديدة، انتقل إلى قسم 'العظات'."; // Changed from الخطب to العظات
         } else if (userMessage.includes("الحياة الروحية")) {
             aiResponse = "قسم 'الحياة الروحية' مصمم لمساعدتك على تتبع نموك الروحي.";
         } else if (userMessage.includes("شكرا")) {
