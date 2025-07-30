@@ -92,7 +92,8 @@
                     <li class="active"><a href="#" data-section="dashboard"><i class="fas fa-tachometer-alt"></i> لوحة القيادة</a></li>
                     <li><a href="#" data-section="tasks"><i class="fas fa-tasks"></i> المهام</a></li>
                     <li><a href="#" data-section="confessions"><i class="fas fa-cross"></i> الاعترافات</a></li>
-                    <li><a href="#" data-section="sermons"><i class="fas fa-church"></i> العظات</a></li> <li><a href="#" data-section="spiritual-life"><i class="fas fa-lightbulb"></i> الحياة الروحية</a></li>
+                    <li><a href="#" data-section="sermons"><i class="fas fa-church"></i> العظات</a></li>
+                    <li><a href="#" data-section="spiritual-life"><i class="fas fa-lightbulb"></i> الحياة الروحية</a></li>
                     <li><a href="#" data-section="chat"><i class="fas fa-comments"></i> الدردشة مع شهاب</a></li>
                 </ul>
             </nav>
@@ -173,16 +174,23 @@
             </section>
 
             <section id="sermons" class="content-section">
-                <h3>إدارة العظات</h3> <button id="add-sermon-btn" class="add-btn"><i class="fas fa-plus"></i> إضافة عظة جديدة</button> <div id="add-sermon-form" class="form-card">
-                    <h4>إضافة عظة</h4> <form>
+                <h3>إدارة العظات</h3>
+                <button id="add-sermon-btn" class="add-btn"><i class="fas fa-plus"></i> إضافة عظة جديدة</button>
+
+                <div id="add-sermon-form" class="form-card">
+                    <h4>إضافة عظة</h4>
+                    <form>
                         <div class="form-group">
-                            <label for="sermon-title-input">عنوان العظة:</label> <input type="text" id="sermon-title-input" required>
+                            <label for="sermon-title-input">عنوان العظة:</label>
+                            <input type="text" id="sermon-title-input" required>
                         </div>
                         <div class="form-group">
-                            <label for="sermon-date-input">تاريخ العظة:</label> <input type="date" id="sermon-date-input" required>
+                            <label for="sermon-date-input">تاريخ العظة:</label>
+                            <input type="date" id="sermon-date-input" required>
                         </div>
                         <div class="form-group">
-                            <label for="sermon-textarea">نص العظة:</label> <textarea id="sermon-textarea" rows="10" required></textarea>
+                            <label for="sermon-textarea">نص العظة:</label>
+                            <textarea id="sermon-textarea" rows="10" required></textarea>
                         </div>
                         <button type="submit">إضافة</button>
                         <button type="button" id="cancel-add-sermon" class="cancel-btn">إلغاء</button>

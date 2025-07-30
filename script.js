@@ -444,7 +444,7 @@ document.addEventListener('DOMContentLoaded', () => {
             renderTasks();
         } else if (sectionId === 'confessions') {
             renderConfessions();
-        } else if (sectionId === 'sermons') { // Check for 'sermons' section
+        } else if (sectionId === 'sermons') {
             renderSermons();
         } else if (sectionId === 'spiritual-life') {
             renderSpiritualEntries();
@@ -565,7 +565,7 @@ document.addEventListener('DOMContentLoaded', () => {
         renderTasks();
     }
 
-    // --- Confessions Management (Example, implement similar for Sermons, Spiritual Life) ---
+    // --- Confessions Management ---
 
     function renderConfessions() {
         if (!priest_app_data.confessions) {
@@ -579,13 +579,18 @@ document.addEventListener('DOMContentLoaded', () => {
         priest_app_data.confessions.forEach(confession => {
             const confessionItem = document.createElement('div');
             confessionItem.classList.add('task-item'); // Reusing task-item style
+            if (confession.completed) {
+                confessionItem.classList.add('completed');
+            }
+            confessionItem.dataset.confessionId = confession.id; // Store ID
             confessionItem.innerHTML = `
                 <div class="task-item-info">
                     <h4>${confession.text}</h4>
                     <p>${new Date(confession.dateAdded).toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
                 </div>
                 <div class="task-actions">
-                    <button class="action-btn delete-btn" data-confession-id="${confession.id}"><i class="fas fa-trash-alt"></i></button>
+                    <button class="action-btn complete-btn"><i class="fas fa-check"></i></button>
+                    <button class="action-btn delete-btn"><i class="fas fa-trash-alt"></i></button>
                 </div>
             `;
             confessionsList.appendChild(confessionItem);
@@ -611,6 +616,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const newConfession = {
             id: Date.now().toString(),
             text: text,
+            completed: false, // New property for completion
             dateAdded: new Date().toISOString()
         };
         if (!priest_app_data.confessions) {
@@ -625,30 +631,52 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     confessionsList.addEventListener('click', (e) => {
-        if (e.target.closest('.delete-btn')) {
-            const confessionId = e.target.closest('.delete-btn').dataset.confessionId;
+        const confessionId = e.target.closest('.task-item')?.dataset.confessionId;
+        if (!confessionId) return;
+
+        if (e.target.closest('.complete-btn')) {
+            toggleConfessionCompletion(confessionId);
+            showGlobalMessage('تم تحديث حالة الاعتراف.', 'success');
+        } else if (e.target.closest('.delete-btn')) {
             if (confirm('هل أنت متأكد أنك تريد حذف هذا الاعتراف؟')) {
-                priest_app_data.confessions = priest_app_data.confessions.filter(c => c.id !== confessionId);
-                saveData();
-                renderConfessions();
+                deleteConfession(confessionId);
                 showGlobalMessage('تم حذف الاعتراف بنجاح.', 'success');
             }
         }
     });
 
-    // --- Sermons Management (Example) ---
+    function toggleConfessionCompletion(confessionId) {
+        const confessionIndex = priest_app_data.confessions.findIndex(c => c.id === confessionId);
+        if (confessionIndex > -1) {
+            priest_app_data.confessions[confessionIndex].completed = !priest_app_data.confessions[confessionIndex].completed;
+            saveData();
+            renderConfessions();
+        }
+    }
+
+    function deleteConfession(confessionId) {
+        priest_app_data.confessions = priest_app_data.confessions.filter(c => c.id !== confessionId);
+        saveData();
+        renderConfessions();
+    }
+
+    // --- Sermons Management ---
     function renderSermons() {
         if (!priest_app_data.sermons) {
             priest_app_data.sermons = [];
         }
         sermonsList.innerHTML = '';
         if (priest_app_data.sermons.length === 0) {
-            sermonsList.innerHTML = '<p>لا توجد عظات مسجلة حالياً. أضف عظة جديدة.</p>'; // Changed from خطب to عظات
+            sermonsList.innerHTML = '<p>لا توجد عظات مسجلة حالياً. أضف عظة جديدة.</p>';
             return;
         }
         priest_app_data.sermons.forEach(sermon => {
             const sermonItem = document.createElement('div');
             sermonItem.classList.add('task-item'); // Reusing task-item style
+            if (sermon.completed) {
+                sermonItem.classList.add('completed');
+            }
+            sermonItem.dataset.sermonId = sermon.id; // Store ID
             sermonItem.innerHTML = `
                 <div class="task-item-info">
                     <h4>${sermon.title}</h4>
@@ -656,7 +684,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p>${sermon.text.substring(0, 100)}...</p>
                 </div>
                 <div class="task-actions">
-                    <button class="action-btn delete-btn" data-sermon-id="${sermon.id}"><i class="fas fa-trash-alt"></i></button>
+                    <button class="action-btn complete-btn"><i class="fas fa-check"></i></button>
+                    <button class="action-btn delete-btn"><i class="fas fa-trash-alt"></i></button>
                 </div>
             `;
             sermonsList.appendChild(sermonItem);
@@ -681,7 +710,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const text = sermonTextarea.value.trim();
 
         if (!title || !date || !text) {
-            showGlobalMessage('جميع حقول العظة مطلوبة.', 'error'); // Changed from الخطبة to العظة
+            showGlobalMessage('جميع حقول العظة مطلوبة.', 'error');
             return;
         }
 
@@ -689,7 +718,8 @@ document.addEventListener('DOMContentLoaded', () => {
             id: Date.now().toString(),
             title: title,
             date: date,
-            text: text
+            text: text,
+            completed: false // New property for completion
         };
         if (!priest_app_data.sermons) {
             priest_app_data.sermons = [];
@@ -697,7 +727,7 @@ document.addEventListener('DOMContentLoaded', () => {
         priest_app_data.sermons.push(newSermon);
         saveData();
         renderSermons();
-        showGlobalMessage('تمت إضافة العظة بنجاح.', 'success'); // Changed from الخطبة to العظة
+        showGlobalMessage('تمت إضافة العظة بنجاح.', 'success');
         sermonTitleInput.value = '';
         sermonDateInput.value = '';
         sermonTextarea.value = '';
@@ -705,18 +735,36 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     sermonsList.addEventListener('click', (e) => {
-        if (e.target.closest('.delete-btn')) {
-            const sermonId = e.target.closest('.delete-btn').dataset.sermonId;
-            if (confirm('هل أنت متأكد أنك تريد حذف هذه العظة؟')) { // Changed from الخطبة to العظة
-                priest_app_data.sermons = priest_app_data.sermons.filter(s => s.id !== sermonId);
-                saveData();
-                renderSermons();
-                showGlobalMessage('تم حذف العظة بنجاح.', 'success'); // Changed from الخطبة to العظة
+        const sermonId = e.target.closest('.task-item')?.dataset.sermonId;
+        if (!sermonId) return;
+
+        if (e.target.closest('.complete-btn')) {
+            toggleSermonCompletion(sermonId);
+            showGlobalMessage('تم تحديث حالة العظة.', 'success');
+        } else if (e.target.closest('.delete-btn')) {
+            if (confirm('هل أنت متأكد أنك تريد حذف هذه العظة؟')) {
+                deleteSermon(sermonId);
+                showGlobalMessage('تم حذف العظة بنجاح.', 'success');
             }
         }
     });
 
-    // --- Spiritual Life Management (Example) ---
+    function toggleSermonCompletion(sermonId) {
+        const sermonIndex = priest_app_data.sermons.findIndex(s => s.id === sermonId);
+        if (sermonIndex > -1) {
+            priest_app_data.sermons[sermonIndex].completed = !priest_app_data.sermons[sermonIndex].completed;
+            saveData();
+            renderSermons();
+        }
+    }
+
+    function deleteSermon(sermonId) {
+        priest_app_data.sermons = priest_app_data.sermons.filter(s => s.id !== sermonId);
+        saveData();
+        renderSermons();
+    }
+
+    // --- Spiritual Life Management ---
     function renderSpiritualEntries() {
         if (!priest_app_data.spiritualEntries) {
             priest_app_data.spiritualEntries = [];
@@ -729,6 +777,10 @@ document.addEventListener('DOMContentLoaded', () => {
         priest_app_data.spiritualEntries.forEach(entry => {
             const entryItem = document.createElement('div');
             entryItem.classList.add('task-item'); // Reusing task-item style
+            if (entry.completed) {
+                entryItem.classList.add('completed');
+            }
+            entryItem.dataset.entryId = entry.id; // Store ID
             entryItem.innerHTML = `
                 <div class="task-item-info">
                     <h4>${entry.title}</h4>
@@ -736,7 +788,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p>${entry.text.substring(0, 100)}...</p>
                 </div>
                 <div class="task-actions">
-                    <button class="action-btn delete-btn" data-entry-id="${entry.id}"><i class="fas fa-trash-alt"></i></button>
+                    <button class="action-btn complete-btn"><i class="fas fa-check"></i></button>
+                    <button class="action-btn delete-btn"><i class="fas fa-trash-alt"></i></button>
                 </div>
             `;
             spiritualEntriesList.appendChild(entryItem);
@@ -769,7 +822,8 @@ document.addEventListener('DOMContentLoaded', () => {
             id: Date.now().toString(),
             title: title,
             date: date,
-            text: text
+            text: text,
+            completed: false // New property for completion
         };
         if (!priest_app_data.spiritualEntries) {
             priest_app_data.spiritualEntries = [];
@@ -785,16 +839,34 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     spiritualEntriesList.addEventListener('click', (e) => {
-        if (e.target.closest('.delete-btn')) {
-            const entryId = e.target.closest('.delete-btn').dataset.entryId;
+        const entryId = e.target.closest('.task-item')?.dataset.entryId;
+        if (!entryId) return;
+
+        if (e.target.closest('.complete-btn')) {
+            toggleSpiritualEntryCompletion(entryId);
+            showGlobalMessage('تم تحديث حالة الإدخال.', 'success');
+        } else if (e.target.closest('.delete-btn')) {
             if (confirm('هل أنت متأكد أنك تريد حذف هذا الإدخال؟')) {
-                priest_app_data.spiritualEntries = priest_app_data.spiritualEntries.filter(e => e.id !== entryId);
-                saveData();
-                renderSpiritualEntries();
+                deleteSpiritualEntry(entryId);
                 showGlobalMessage('تم حذف الإدخال بنجاح.', 'success');
             }
         }
     });
+
+    function toggleSpiritualEntryCompletion(entryId) {
+        const entryIndex = priest_app_data.spiritualEntries.findIndex(e => e.id === entryId);
+        if (entryIndex > -1) {
+            priest_app_data.spiritualEntries[entryIndex].completed = !priest_app_data.spiritualEntries[entryIndex].completed;
+            saveData();
+            renderSpiritualEntries();
+        }
+    }
+
+    function deleteSpiritualEntry(entryId) {
+        priest_app_data.spiritualEntries = priest_app_data.spiritualEntries.filter(e => e.id !== entryId);
+        saveData();
+        renderSpiritualEntries();
+    }
 
     // --- AI Chat Logic ---
 
@@ -825,8 +897,8 @@ document.addEventListener('DOMContentLoaded', () => {
             aiResponse = "لإدارة المهام، انتقل إلى قسم 'المهام' في الشريط الجانبي.";
         } else if (userMessage.includes("اعترافات")) {
             aiResponse = "يمكنك إضافة وتتبع الاعترافات في قسم 'الاعترافات'.";
-        } else if (userMessage.includes("عظات")) { // Changed from خطب to عظات
-            aiResponse = "للاطلاع على العظات أو إضافة عظات جديدة، انتقل إلى قسم 'العظات'."; // Changed from الخطب to العظات
+        } else if (userMessage.includes("عظات")) {
+            aiResponse = "للاطلاع على العظات أو إضافة عظات جديدة، انتقل إلى قسم 'العظات'.";
         } else if (userMessage.includes("الحياة الروحية")) {
             aiResponse = "قسم 'الحياة الروحية' مصمم لمساعدتك على تتبع نموك الروحي.";
         } else if (userMessage.includes("شكرا")) {
