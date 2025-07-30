@@ -816,7 +816,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Simple keyword-based responses
         if (userMessage.includes("مرحبا") || userMessage.includes("سلام")) {
-            aiResponse = "مرحباً بك! أنا شهاب، مساعدك الذكي في تطبيق 'الراعي والخراف'. كيف يمكنني مساعدتك اليوم؟";
+            aiResponse = "مرحباً بك! أنا شهاب، مساعدك الذكي في تطبيق 'الراعي والخراف'. كيف يمكنني مساعدتك اليوم؟"; // Changed message here
         } else if (userMessage.includes("كيف حالك")) {
             aiResponse = "أنا بخير بفضل مساعدتك. شكراً على سؤالك!";
         } else if (userMessage.includes("من انت")) {
