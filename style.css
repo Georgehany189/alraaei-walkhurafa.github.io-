@@ -19,6 +19,9 @@
     --box-shadow-light: 0 4px 15px rgba(0, 0, 0, 0.07); /* More spread out, less intense */
     --box-shadow-medium: 0 10px 30px rgba(0, 0, 0, 0.12); /* More significant lift */
     --transition-speed: 0.3s; /* Global transition speed */
+    --sidebar-width-desktop: 300px; /* New variable for desktop sidebar width */
+    --sidebar-width-mobile: 280px; /* New variable for mobile sidebar width */
+
 
     /* Typography */
     --font-primary-ar: 'Cairo', sans-serif;
@@ -28,10 +31,10 @@
 /* Applying a subtle background pattern/texture */
 body {
     background-color: var(--background-color);
-    background-image: url('data:image/svg+xml,%3Csvg width="6" height="6" viewBox="0 0 6 6" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%23e8e8e8" fill-opacity="0.2" fill-rule="evenodd"%3E%3Cpath d="M5 0h1L0 6V5zm-1 0h1L0 4V3zm-1 0h1L0 2V1zm-1 0h1L0 0v1zm2 5h1L1 0h-1v1zm1 1h1L2 0h-1v1zm1 1h1L3 0h-1v1zm1 1h1L4 0h-1v1z"/%3C/g%3E%3C/svg%3E'); /* Very subtle diagonal lines */
+    background-image: url('data:image/svg+xml,%3Csvg width="6" height="6" viewBox="0 0 6 6" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%23e8e8e8" fill-opacity="0.2" fill-rule="evenodd"%3E%3Cpath d="M5 0h1L0 6V5zm-1 0h1L0 4V3zm-1 0h1L0 2V1zm-1 0h1L0 0v1zm2 5h1L1 0h-1v1zm1 1h1L2 0h-1v1zm1 1h1L3 0h-1v1zm1 1h1L4 0h-1v1z"/%3E%3C/g%3E%3C/svg%3E'); /* Very subtle diagonal lines */
     color: var(--text-color);
     line-height: 1.6;
-    overflow-x: hidden;
+    overflow-x: hidden; /* Prevent horizontal scroll from sidebar */
     direction: rtl; /* Right-to-left for Arabic */
     text-align: right; /* Align text to the right */
     font-family: var(--font-primary-ar), var(--font-primary-en), sans-serif;
@@ -339,32 +342,37 @@ input:focus, textarea:focus {
 .container {
     display: flex;
     min-height: 100vh;
-    transition: all var(--transition-speed) ease;
+    /* transition for layout shifts when sidebar opens/closes on desktop */
+    transition: transform var(--transition-speed) ease;
     background-color: var(--background-color);
+    /* No overflow-x hidden here, handled by body */
 }
 
 /* Sidebar */
 .sidebar {
-    width: 300px; /* Wider sidebar */
+    width: var(--sidebar-width-desktop); /* Use variable for desktop width */
     background-color: var(--primary-color);
     color: white;
-    padding: 30px; /* More padding */
+    padding: 30px;
     box-shadow: var(--box-shadow-medium);
     display: flex;
     flex-direction: column;
-    position: sticky;
+    position: sticky; /* Sticky on desktop */
     top: 0;
     height: 100vh;
     border-radius: 0 var(--border-radius-base) var(--border-radius-base) 0;
+    /* Transition for mobile slide-in */
+    transition: right var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    z-index: 900; /* Ensure it's above other content but below overlay */
 }
 
 .sidebar-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 45px; /* More spacing */
+    margin-bottom: 45px;
     padding-bottom: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.25); /* Slightly stronger separator */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 .sidebar-header h3 {
@@ -378,26 +386,26 @@ input:focus, textarea:focus {
 }
 
 .sidebar nav ul li {
-    margin-bottom: 15px; /* More spacing */
+    margin-bottom: 15px;
 }
 
 .sidebar nav ul li a {
     color: white;
     text-decoration: none;
-    padding: 15px 25px; /* More padding */
+    padding: 15px 25px;
     display: flex;
     align-items: center;
-    gap: 18px; /* More space between icon and text */
+    gap: 18px;
     border-radius: var(--border-radius-base);
     transition: all var(--transition-speed) ease;
-    font-size: 1.15em; /* Slightly larger text */
+    font-size: 1.15em;
     font-weight: 500;
 }
 
 .sidebar nav ul li a:hover {
     background-color: var(--primary-dark);
     color: var(--accent-color);
-    transform: translateX(-8px); /* More pronounced slide effect */
+    transform: translateX(-8px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
@@ -405,17 +413,17 @@ input:focus, textarea:focus {
     background-color: var(--primary-dark);
     color: var(--accent-color);
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
-    transform: translateX(-4px); /* Keep slight shift for active */
+    transform: translateX(-4px);
 }
 
 .sidebar nav ul li a i {
-    font-size: 1.4em; /* Larger icons */
+    font-size: 1.4em;
 }
 
 .sidebar .logout-btn {
     margin-top: auto;
     width: 100%;
-    padding: 16px 25px; /* More padding */
+    padding: 16px 25px;
     background-color: var(--accent-color);
     color: white;
     border-radius: var(--border-radius-base);
@@ -430,34 +438,36 @@ input:focus, textarea:focus {
 
 .sidebar .logout-btn:hover {
     background-color: var(--accent-dark);
-    transform: translateY(-3px); /* More lift */
+    transform: translateY(-3px);
     box-shadow: 0 8px 20px rgba(255, 107, 107, 0.45);
 }
 
 .sidebar .logout-btn i {
-    font-size: 1.2em; /* Ensure icon scales */
+    font-size: 1.2em;
 }
 
 
 /* Main Content Area */
 .main-content {
     flex-grow: 1;
-    padding: 35px; /* More padding */
+    padding: 35px;
     background-color: var(--background-color);
+    /* Transition for pushing content when sidebar opens on desktop */
+    transition: margin-right var(--transition-speed) ease;
 }
 
 .main-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 35px; /* More spacing */
+    margin-bottom: 35px;
     padding-bottom: 25px;
     border-bottom: 1px solid var(--divider-color);
 }
 
 .main-header h1 {
     color: var(--primary-dark);
-    font-size: 2.5em; /* Larger title */
+    font-size: 2.5em;
     margin: 0;
     font-weight: 700;
 }
@@ -465,7 +475,7 @@ input:focus, textarea:focus {
 .main-header .logout-btn {
     background-color: var(--accent-color);
     color: white;
-    padding: 12px 22px; /* More padding */
+    padding: 12px 22px;
     border-radius: var(--border-radius-base);
     font-size: 1.05em;
     font-weight: 600;
@@ -485,14 +495,35 @@ input:focus, textarea:focus {
     font-size: 1.1em;
 }
 
+/* Hamburger Menu Base Styles */
+.hamburger-menu {
+    display: none; /* Hidden by default on desktop */
+    font-size: 2.2em; /* Size for mobile */
+    cursor: pointer;
+    color: var(--primary-dark); /* Color for main header */
+    transition: transform var(--transition-speed) ease;
+    padding: 5px; /* Increase clickable area */
+    border-radius: var(--border-radius-base);
+}
+
+.hamburger-menu:hover {
+    transform: scale(1.1);
+}
+
+/* For the one inside the sidebar, override color */
+.sidebar .hamburger-menu {
+    color: white;
+}
+
+
 /* Content Sections */
 .content-section {
     display: none;
     background-color: var(--card-background);
-    padding: 35px; /* More padding */
+    padding: 35px;
     border-radius: var(--border-radius-base);
     box-shadow: var(--box-shadow-light);
-    margin-bottom: 30px; /* More spacing */
+    margin-bottom: 30px;
 }
 
 .content-section.active {
@@ -513,11 +544,11 @@ input:focus, textarea:focus {
 .user-info-card {
     background-color: var(--primary-light);
     color: var(--primary-dark);
-    padding: 30px; /* More padding */
+    padding: 30px;
     border-radius: var(--border-radius-base);
     margin-bottom: 30px;
     border: 1px solid var(--primary-color);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* Subtle shadow for depth */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .user-info-card h3 {
@@ -539,22 +570,22 @@ input:focus, textarea:focus {
 
 .dashboard-stats {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Larger min-width for cards */
-    gap: 30px; /* More spacing */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
 }
 
 .stat-card {
     background-color: var(--card-background);
-    padding: 30px; /* More padding */
+    padding: 30px;
     border-radius: var(--border-radius-base);
     box-shadow: var(--box-shadow-light);
     text-align: center;
-    border-top: 6px solid var(--primary-color); /* Stronger top border */
+    border-top: 6px solid var(--primary-color);
     transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
 }
 
 .stat-card:hover {
-    transform: translateY(-8px); /* More pronounced lift */
+    transform: translateY(-8px);
     box-shadow: var(--box-shadow-medium);
 }
 
@@ -566,7 +597,7 @@ input:focus, textarea:focus {
 }
 
 .stat-card p {
-    font-size: 3em; /* Even larger numbers */
+    font-size: 3em;
     font-weight: 700;
     color: var(--accent-color);
     line-height: 1;
@@ -576,7 +607,7 @@ input:focus, textarea:focus {
 .add-btn {
     background-color: var(--primary-color);
     color: white;
-    padding: 14px 28px; /* More padding */
+    padding: 14px 28px;
     border-radius: var(--border-radius-base);
     font-size: 1.1em;
     margin-bottom: 30px;
@@ -598,31 +629,31 @@ input:focus, textarea:focus {
 
 .add-form {
     background-color: var(--primary-light);
-    padding: 30px; /* More padding */
+    padding: 30px;
     border-radius: var(--border-radius-base);
     margin-bottom: 30px;
     display: none;
     flex-direction: column;
-    gap: 20px; /* More spacing */
+    gap: 20px;
     animation: fadeIn 0.6s ease-out;
-    box-shadow: inset 0 0 12px rgba(0,0,0,0.06); /* Stronger inner shadow */
+    box-shadow: inset 0 0 12px rgba(0,0,0,0.06);
 }
 
 .add-form input[type="text"],
 .add-form input[type="date"],
 .add-form textarea {
-    padding: 16px; /* More padding */
+    padding: 16px;
     border: 1px solid var(--primary-color);
     background-color: white;
 }
 
 .add-form textarea {
-    min-height: 120px; /* Taller default textarea */
+    min-height: 120px;
 }
 
 .add-form .submit-btn,
 .add-form .cancel-btn {
-    padding: 14px 22px; /* More padding */
+    padding: 14px 22px;
     border-radius: var(--border-radius-base);
     font-size: 1.05em;
     font-weight: 600;
@@ -643,7 +674,7 @@ input:focus, textarea:focus {
 .add-form .cancel-btn {
     background-color: var(--subtle-text);
     color: white;
-    margin-left: 18px; /* More spacing between buttons */
+    margin-left: 18px;
     box-shadow: 0 3px 8px rgba(189, 195, 199, 0.25);
 }
 
@@ -657,30 +688,30 @@ input:focus, textarea:focus {
 .data-list {
     display: flex;
     flex-direction: column;
-    gap: 20px; /* More spacing */
+    gap: 20px;
 }
 
 .task-item {
     background-color: var(--card-background);
-    padding: 20px 28px; /* More padding */
+    padding: 20px 28px;
     border-radius: var(--border-radius-base);
     box-shadow: var(--box-shadow-light);
     display: flex;
     justify-content: space-between;
     align-items: center;
     transition: all var(--transition-speed) ease;
-    border-right: 8px solid var(--primary-color); /* Thicker indicator */
+    border-right: 8px solid var(--primary-color);
 }
 
 .task-item:hover {
-    transform: translateY(-4px); /* More pronounced lift */
+    transform: translateY(-4px);
     box-shadow: var(--box-shadow-medium);
 }
 
 .task-item.completed {
     border-right-color: var(--success-color);
     opacity: 0.9;
-    background-color: #f6fff6; /* Even lighter green background for completed */
+    background-color: #f6fff6;
 }
 
 .task-item.completed .task-item-info h4 {
@@ -703,11 +734,11 @@ input:focus, textarea:focus {
 .task-actions {
     display: flex;
     align-items: center;
-    gap: 15px; /* More spacing */
+    gap: 15px;
 }
 
 .complete-checkbox {
-    width: 24px; /* Larger checkbox */
+    width: 24px;
     height: 24px;
     cursor: pointer;
     accent-color: var(--primary-color);
@@ -717,14 +748,14 @@ input:focus, textarea:focus {
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 1.35em; /* Larger icons */
+    font-size: 1.35em;
     padding: 12px;
     border-radius: 50%;
     transition: all var(--transition-speed) ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 44px; /* Fixed size */
+    width: 44px;
     height: 44px;
 }
 
@@ -739,7 +770,7 @@ input:focus, textarea:focus {
 .action-btn.delete-btn:hover {
     background-color: var(--error-color);
     color: white;
-    transform: scale(1.15); /* More pronounced scale */
+    transform: scale(1.15);
 }
 
 .action-btn.complete-btn {
@@ -749,13 +780,13 @@ input:focus, textarea:focus {
 .action-btn.complete-btn:hover {
     background-color: var(--success-color);
     color: white;
-    transform: scale(1.15); /* More pronounced scale */
+    transform: scale(1.15);
 }
 
 /* Settings Section */
 .settings-card {
     background-color: var(--primary-light);
-    padding: 35px; /* More padding */
+    padding: 35px;
     border-radius: var(--border-radius-base);
     margin-top: 30px;
     box-shadow: inset 0 0 12px rgba(0,0,0,0.04);
@@ -795,13 +826,33 @@ input:focus, textarea:focus {
     box-shadow: 0 6px 15px rgba(74, 144, 226, 0.4);
 }
 
-/* Utility Classes */
+
+/* Utility Classes (New and Updated) */
 .desktop-only {
-    display: block;
+    display: block; /* Shown by default */
 }
 
 .desktop-hidden {
+    display: none; /* Hidden by default */
+}
+
+/* Overlay for mobile sidebar */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 800; /* Below sidebar, above main content */
     display: none;
+    opacity: 0;
+    transition: opacity var(--transition-speed) ease;
+}
+
+.overlay.active {
+    display: block;
+    opacity: 1;
 }
 
 /* Animations */
@@ -817,9 +868,9 @@ input:focus, textarea:focus {
 }
 
 /* Responsive Design */
-@media (max-width: 992px) {
+@media (max-width: 992px) { /* Tablet breakpoint */
     .sidebar {
-        width: 250px; /* Adjust sidebar for medium screens */
+        width: 250px;
         padding: 25px;
     }
     .sidebar nav ul li a {
@@ -849,53 +900,78 @@ input:focus, textarea:focus {
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 768px) { /* Mobile breakpoint */
     .container {
         flex-direction: column;
+        /* No transform for push content here, as sidebar is fixed */
+    }
+
+    /* Hide desktop-only elements */
+    .desktop-only {
+        display: none;
+    }
+
+    /* Show desktop-hidden elements (hamburger menu) */
+    .desktop-hidden {
+        display: block;
     }
 
     .sidebar {
-        position: fixed;
-        right: -300px; /* Hidden off-screen to the right (match width) */
+        position: fixed; /* Fixed position for mobile slide-out */
         top: 0;
+        right: calc(-1 * var(--sidebar-width-mobile)); /* Hidden off-screen to the right */
         height: 100%;
-        z-index: 1000;
-        transition: right var(--transition-speed) ease;
+        width: var(--sidebar-width-mobile); /* Use mobile width variable */
+        z-index: 1000; /* Ensure sidebar is on top */
+        transition: right var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+        border-radius: 0; /* No radius for full height sidebar */
         box-shadow: -6px 0 20px rgba(0, 0, 0, 0.3); /* Stronger shadow for mobile sidebar */
-        border-radius: 0;
     }
 
+    /* When sidebar is open, slide it in */
     .container.sidebar-open .sidebar {
         right: 0;
     }
 
+    /* Main content should take full width on mobile */
     .main-content {
         padding: 25px;
         width: 100%;
+        /* Remove margin-right from desktop */
+        margin-right: 0;
+        /* Add a small transition to main content if we want to dim it slightly */
+        transition: filter var(--transition-speed) ease;
     }
 
+    /* Dim the main content when sidebar is open */
+    .container.sidebar-open .main-content {
+        filter: brightness(0.8); /* Dim effect */
+        pointer-events: none; /* Prevent interaction with dimmed content */
+    }
+
+
+    /* Hamburger menu inside sidebar header for closing on mobile */
+    .sidebar .hamburger-menu {
+        display: block; /* Ensure it's visible inside the sidebar header */
+        color: white; /* Color for the close icon */
+        font-size: 2.2em; /* Ensure size consistency */
+        transform: rotate(0deg); /* Reset any previous transforms */
+    }
+
+    /* Adjust main header for mobile */
     .main-header {
-        justify-content: space-between;
+        justify-content: flex-start; /* Align hamburger to the right */
+        gap: 20px; /* Space between hamburger and title */
         padding-bottom: 20px;
     }
-
-    .main-header .desktop-only {
-        display: none;
+    .main-header h1 {
+        flex-grow: 1; /* Allow title to take remaining space */
+        text-align: right; /* Align title to the right */
+    }
+    .main-header .hamburger-menu {
+        order: 2; /* Put hamburger on the left in RTL */
     }
 
-    .main-header .desktop-hidden {
-        display: block;
-        font-size: 2.2em; /* Larger hamburger */
-        color: var(--primary-dark);
-        cursor: pointer;
-    }
-
-    .sidebar .hamburger-menu {
-        display: block;
-        font-size: 2.2em;
-        cursor: pointer;
-        color: white;
-    }
 
     .dashboard-stats {
         grid-template-columns: 1fr;
@@ -919,7 +995,7 @@ input:focus, textarea:focus {
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 480px) { /* Smaller mobile screens */
     .auth-card {
         padding: 25px;
         margin: 15px;
@@ -934,7 +1010,7 @@ input:focus, textarea:focus {
         padding: 12px 15px;
     }
     .input-group input {
-        padding-left: 45px; /* Adjust for smaller screens */
+        padding-left: 45px;
     }
     .password-toggle {
         font-size: 1em;
@@ -976,9 +1052,10 @@ input:focus, textarea:focus {
         font-size: 1.2em;
     }
     .stat-card p {
-        font-size: 2.5em; /* Adjust large numbers for smaller screens */
+        font-size: 2.5em;
     }
     .user-info-card p {
         font-size: 1.05em;
     }
 }
+

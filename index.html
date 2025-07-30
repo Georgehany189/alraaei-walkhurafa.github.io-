@@ -12,85 +12,14 @@
 </head>
 <body>
     <div class="login-page active" id="login-page">
-        <div class="auth-card">
-            <div class="auth-toggle">
-                <button id="login-toggle" class="active">تسجيل الدخول</button>
-                <button id="register-toggle">إنشاء حساب</button>
-            </div>
-            <div id="global-message" class="global-message"></div>
-
-            <form id="login-form" class="auth-form active">
-                <h2>تسجيل الدخول</h2>
-                <div class="input-group">
-                    <label for="login-email">البريد الإلكتروني</label>
-                    <input type="email" id="login-email" required>
-                    <span class="validation-error" id="login-email-error"></span>
-                </div>
-                <div class="input-group">
-                    <label for="login-password">كلمة المرور</label>
-                    <input type="password" id="login-password" required>
-                    <span class="password-toggle" id="toggle-login-password"><i class="fas fa-eye"></i></span>
-                    <span class="validation-error" id="login-password-error"></span>
-                </div>
-                <button type="submit" class="auth-btn">تسجيل الدخول</button>
-                <div class="social-login">
-                    <p>أو سجل الدخول باستخدام:</p>
-                    <div id="g_id_onload"
-                         data-client_id="847761014161-t4j3h4u0m6t5262r0142h7e7041a8u17.apps.googleusercontent.com"
-                         data-callback="handleGoogleLoginResponse"
-                         data-auto_prompt="false">
-                    </div>
-                    <div class="g_id_signin"
-                         data-type="standard"
-                         data-size="large"
-                         data-theme="outline"
-                         data-text="sign_in_with"
-                         data-shape="rectangular"
-                         data-logo_alignment="left">
-                    </div>
-                </div>
-            </form>
-
-            <form id="register-form" class="auth-form">
-                <h2>إنشاء حساب جديد</h2>
-                <div class="input-group">
-                    <label for="register-name">الاسم الكامل</label>
-                    <input type="text" id="register-name" required>
-                    <span class="validation-error" id="register-name-error"></span>
-                </div>
-                <div class="input-group">
-                    <label for="register-email">البريد الإلكتروني</label>
-                    <input type="email" id="register-email" required>
-                    <span class="validation-error" id="register-email-error"></span>
-                </div>
-                <div class="input-group">
-                    <label for="register-password">كلمة المرور</label>
-                    <input type="password" id="register-password" required>
-                    <span class="password-toggle" id="toggle-register-password"><i class="fas fa-eye"></i></span>
-                    <span class="validation-error" id="register-password-error"></span>
-                </div>
-                <div class="input-group">
-                    <label for="register-dob">تاريخ الميلاد</label>
-                    <input type="date" id="register-dob" required>
-                    <span class="validation-error" id="register-dob-error"></span>
-                </div>
-                <div class="input-group">
-                    <label for="register-age">السن</label>
-                    <input type="number" id="register-age" required min="1">
-                    <span class="validation-error" id="register-age-error"></span>
-                </div>
-                <button type="submit" class="auth-btn">إنشاء حساب</button>
-            </form>
         </div>
-    </div>
 
-    <div class="container">
-        <aside class="sidebar">
+    <div class="container" id="app-container">
+        <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <h3>لوحة التحكم</h3>
-                <div class="hamburger-menu">
-                    <i class="fas fa-bars"></i>
-                </div>
+                <div class="hamburger-menu" id="sidebar-hamburger-menu">
+                    <i class="fas fa-times"></i> </div>
             </div>
             <nav>
                 <ul>
@@ -105,117 +34,48 @@
             </nav>
         </aside>
 
-        <main class="main-content">
+        <main class="main-content" id="main-content">
             <header class="main-header">
-                <div class="hamburger-menu desktop-hidden">
+                <div class="hamburger-menu desktop-hidden" id="main-hamburger-menu">
                     <i class="fas fa-bars"></i>
                 </div>
                 <h1 id="current-section-title">لوحة القيادة</h1>
-                <button id="logout-btn" class="logout-btn desktop-only"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
+                <button id="logout-btn-desktop" class="logout-btn desktop-only"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
             </header>
 
-            <section id="dashboard" class="content-section active">
-                <h2>أهلاً بك في لوحة القيادة!</h2>
-                <div class="user-info-card">
-                    <h3>معلومات المستخدم</h3>
-                    <p><strong>الاسم:</strong> <span id="user-name-display"></span></p>
-                    <p><strong>البريد الإلكتروني:</strong> <span id="user-email-display"></span></p>
-                    <p><strong>تاريخ الميلاد:</strong> <span id="user-dob-display"></span></p>
-                    <p><strong>السن:</strong> <span id="user-age-display"></span></p>
-                </div>
-                <div class="dashboard-stats">
-                    <div class="stat-card">
-                        <h3>المهام المكتملة</h3>
-                        <p>5/10</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>اعترافات جديدة</h3>
-                        <p>2</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>عظات تمت قراءتها</h3>
-                        <p>7</p>
-                    </div>
-                </div>
-            </section>
-
-            <section id="tasks" class="content-section">
-                <h2>المهام</h2>
-                <button id="add-task-btn" class="add-btn"><i class="fas fa-plus"></i> إضافة مهمة جديدة</button>
-                <form id="add-task-form" class="add-form">
-                    <input type="text" id="task-input" placeholder="اكتب مهمة جديدة..." required>
-                    <button type="submit" class="submit-btn">إضافة</button>
-                    <button type="button" id="cancel-add-task" class="cancel-btn">إلغاء</button>
-                </form>
-                <div id="tasks-list" class="data-list">
-                    </div>
-            </section>
-
-            <section id="confessions" class="content-section">
-                <h2>الاعترافات</h2>
-                <button id="add-confession-btn" class="add-btn"><i class="fas fa-plus"></i> إضافة اعتراف جديد</button>
-                <form id="add-confession-form" class="add-form">
-                    <textarea id="confession-text-input" placeholder="اكتب اعترافك هنا..." rows="5" required></textarea>
-                    <button type="submit" class="submit-btn">إضافة</button>
-                    <button type="button" id="cancel-add-confession" class="cancel-btn">إلغاء</button>
-                </form>
-                <div id="confessions-list" class="data-list">
-                    </div>
-            </section>
-
-            <section id="sermons" class="content-section">
-                <h2>العظات</h2>
-                <button id="add-sermon-btn" class="add-btn"><i class="fas fa-plus"></i> إضافة عظة جديدة</button>
-                <form id="add-sermon-form" class="add-form">
-                    <input type="text" id="sermon-title-input" placeholder="عنوان العظة" required>
-                    <input type="date" id="sermon-date-input" required>
-                    <textarea id="sermon-textarea" placeholder="نص العظة..." rows="8" required></textarea>
-                    <button type="submit" class="submit-btn">إضافة</button>
-                    <button type="button" id="cancel-add-sermon" class="cancel-btn">إلغاء</button>
-                </form>
-                <div id="sermons-list" class="data-list">
-                    </div>
-            </section>
-
-            <section id="spiritual-life" class="content-section">
-                <h2>الحياة الروحية</h2>
-                <button id="add-spiritual-entry-btn" class="add-btn"><i class="fas fa-plus"></i> إضافة إدخال جديد</button>
-                <form id="add-spiritual-entry-form" class="add-form">
-                    <input type="text" id="spiritual-entry-title-input" placeholder="عنوان الإدخال (مثال: تأمل، إنجاز روحي)" required>
-                    <input type="date" id="spiritual-entry-date-input" required>
-                    <textarea id="spiritual-entry-textarea" placeholder="اكتب عن تجربتك أو تأملك الروحي هنا..." rows="8" required></textarea>
-                    <button type="submit" class="submit-btn">إضافة</button>
-                    <button type="button" id="cancel-add-spiritual-entry" class="cancel-btn">إلغاء</button>
-                </form>
-                <div id="spiritual-entries-list" class="data-list">
-                    </div>
-            </section>
-
-            <section id="settings" class="content-section">
-                <h2>الإعدادات</h2>
-                <p>هنا يمكنك إدارة إعدادات حسابك وتفضيلات التطبيق.</p>
-                <div class="settings-card">
-                    <h3>تغيير كلمة المرور</h3>
-                    <form>
-                        <div class="input-group">
-                            <label for="old-password">كلمة المرور القديمة</label>
-                            <input type="password" id="old-password">
-                        </div>
-                        <div class="input-group">
-                            <label for="new-password">كلمة المرور الجديدة</label>
-                            <input type="password" id="new-password">
-                        </div>
-                        <div class="input-group">
-                            <label for="confirm-new-password">تأكيد كلمة المرور الجديدة</label>
-                            <input type="password" id="confirm-new-password">
-                        </div>
-                        <button type="submit" class="submit-btn">حفظ التغييرات</button>
-                    </form>
-                </div>
-            </section>
-        </main>
+            </main>
     </div>
 
     <script src="script.js"></script>
+    <script>
+        // Basic JavaScript to toggle sidebar (this part should be in script.js normally)
+        document.addEventListener('DOMContentLoaded', function() {
+            const appContainer = document.getElementById('app-container');
+            const mainHamburgerMenu = document.getElementById('main-hamburger-menu');
+            const sidebarHamburgerMenu = document.getElementById('sidebar-hamburger-menu');
+            const sidebarLinks = document.querySelectorAll('#sidebar nav ul li a');
+
+            if (mainHamburgerMenu) {
+                mainHamburgerMenu.addEventListener('click', function() {
+                    appContainer.classList.add('sidebar-open');
+                });
+            }
+
+            if (sidebarHamburgerMenu) {
+                sidebarHamburgerMenu.addEventListener('click', function() {
+                    appContainer.classList.remove('sidebar-open');
+                });
+            }
+
+            // Close sidebar when a link is clicked (useful on mobile)
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) { // Only close on smaller screens
+                        appContainer.classList.remove('sidebar-open');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
