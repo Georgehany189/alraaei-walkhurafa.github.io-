@@ -882,7 +882,7 @@ document.addEventListener('DOMContentLoaded', () => {
         chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight; // Scroll to bottom
     }
 
-    // Simulate AI response (شهاب) - ENHANCED
+    // Simulate AI response (شهاب) - INSTANTANEOUS RESPONSE
     function getAiResponse(userMessage) {
         userMessage = userMessage.toLowerCase(); // For easier matching
         let aiResponse = "آسف، أنا شهاب، مساعدك في هذا التطبيق. معرفتي محدودة بالمعلومات المخزنة لدي. هل يمكنني مساعدتك بشيء يتعلق بالمهام أو الاعترافات أو العظات أو الحياة الروحية؟";
@@ -917,9 +917,8 @@ document.addEventListener('DOMContentLoaded', () => {
             aiResponse = "أنا أساعدك في تتبع المهام، تسجيل الاعترافات، حفظ العظات، وتوثيق رحلتك الروحية. كما يمكنك الدردشة معي للحصول على توجيهات حول استخدام التطبيق.";
         }
 
-        setTimeout(() => {
-            appendMessage(aiResponse, false);
-        }, 800); // Simulate processing time
+        // Removed setTimeout here to make the response immediate
+        appendMessage(aiResponse, false);
     }
 
     // Handle chat message sending
@@ -937,7 +936,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const messageText = chatInput.value.trim();
         if (messageText) {
             appendMessage(messageText, true);
-            getAiResponse(messageText);
+            getAiResponse(messageText); // AI responds immediately
             chatInput.value = ''; // Clear input field
         }
     }
